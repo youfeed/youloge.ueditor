@@ -66,7 +66,7 @@ module.exports = function (grunt) {
                         return '// ' + filename + '\n' + src.replace('/_css/', '/css/') + '\n';
                     }
                 },
-                src: Util.fetchScripts("_examples/editor_api.js", Util.jsBasePath),
+                src: Util.fetchScripts("./ueditor.dev.js", Util.jsBasePath),
                 dest: disDir + packageJson.name + '.all.js'
             },
             parse: {
@@ -121,7 +121,7 @@ module.exports = function (grunt) {
             demo: {
                 files: [
                     {
-                        src: '_examples/completeDemo.html',
+                        src: 'index.html',
                         dest: disDir + 'index.html'
                     }
                 ]
@@ -132,27 +132,6 @@ module.exports = function (grunt) {
                 src: 'php/**',
                 dest: disDir
 
-            },
-            asp: {
-
-                expand: true,
-                src: 'asp/**',
-                dest: disDir
-
-            },
-            jsp: {
-
-                expand: true,
-                src: 'jsp/**',
-                dest: disDir
-
-            },
-            net: {
-
-                expand: true,
-                src: 'net/**',
-                dest: disDir
-
             }
         },
         transcoding: {
@@ -160,13 +139,13 @@ module.exports = function (grunt) {
             options: {
                 charset: encode
             },
-            src: [disDir + '**/*.html', disDir + '**/*.js', disDir + '**/*.css', disDir + '**/*.json', disDir + '**/*.jsp', disDir + '**/*.asp']
+            src: [disDir + '**/*.html', disDir + '**/*.js', disDir + '**/*.css', disDir + '**/*.json']
 
         },
         replace: {
 
             fileEncode: {
-                src: [ disDir + '**/*.html', disDir + 'dialogs/**/*.js', disDir + '**/*.css', disDir + '**/*.php', disDir + '**/*.jsp', disDir + '**/*.ashx', disDir + '**/*.asp' ],
+                src: [ disDir + '**/*.html', disDir + 'dialogs/**/*.js', disDir + '**/*.css', disDir + '**/*.php' ],
                 overwrite: true,
                 replacements: [
                     {
@@ -184,7 +163,7 @@ module.exports = function (grunt) {
                         to: ''
                     },
                     {
-                        from: 'editor_api.js',
+                        from: 'ueditor.dev.js',
                         to: packageJson.name + '.all.min.js'
                     }
                 ]

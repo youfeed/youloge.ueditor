@@ -1,17 +1,17 @@
-<!DOCTYPE HTML>
+<!DOCTYPE html>
 <html>
 <head>
-    <title>完整demo</title>
+    <title>正式开发版本</title>
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
-    <script type="text/javascript" charset="utf-8" src="../ueditor.config.js"></script>
-    <script type="text/javascript" charset="utf-8" src="editor_api.js"> </script>
+    <script type="text/javascript" charset="utf-8" src="./ueditor.config.js"></script>
+    <script type="text/javascript" charset="utf-8" src="./ueditor.dev.js"> </script>
     <!--建议手动加在语言，避免在ie下有时因为加载语言失败导致编辑器加载失败-->
     <!--这里加载的语言文件会覆盖你在配置项目里添加的语言类型，比如你在配置项目里配置的是英文，这里加载的中文，那最后就是中文-->
-    <script type="text/javascript" charset="utf-8" src="../lang/zh-cn/zh-cn.js"></script>
+    <script type="text/javascript" charset="utf-8" src="../lang/zh-cn.js"></script>
 
     <style type="text/css">
-        .clear {
-            clear: both;
+        div{
+            width:100%;
         }
     </style>
 </head>
@@ -30,8 +30,8 @@
         <button onclick="getPlainTxt()">获得带格式的纯文本</button>
         <button onclick="hasContent()">判断是否有内容</button>
         <button onclick="setFocus()">使编辑器获得焦点</button>
-        <button onmousedown="isFocus(event)" style="color:red">new 编辑器是否获得焦点</button>
-        <button onmousedown="setblur(event)" style="color:red">new 编辑器失去焦点</button>
+        <button onmousedown="isFocus(event)">编辑器是否获得焦点</button>
+        <button onmousedown="setblur(event)" >编辑器失去焦点</button>
 
     </div>
     <div>
@@ -41,32 +41,38 @@
         <button onclick="setDisabled()">不可编辑</button>
         <button onclick=" UE.getEditor('editor').setHide()">隐藏编辑器</button>
         <button onclick=" UE.getEditor('editor').setShow()">显示编辑器</button>
-        <button onclick=" UE.getEditor('editor').setHeight(300)">设置编辑器的高度为300</button>
+        <button onclick=" UE.getEditor('editor').setHeight(300)">设置高度为300默认关闭了自动长高</button>
     </div>
 
     <div>
-        <button onclick="getLocalData()" style="color:red">new 获取草稿箱内容</button>
-        <button onclick="clearLocalData()" style="color:red">new 清空草稿箱</button>
+        <button onclick="getLocalData()" >获取草稿箱内容</button>
+        <button onclick="clearLocalData()" >清空草稿箱</button>
     </div>
 
 </div>
 <div>
-    <button onclick="createEditor()"/>
+    <button onclick="createEditor()">
     创建编辑器</button>
-    <button onclick="deleteEditor()"/>
+    <button onclick="deleteEditor()">
     删除编辑器</button>
 </div>
 
-</body>
 <script type="text/javascript">
-
-    //实例化编辑器
-    //建议使用工厂方法getEditor创建和引用编辑器实例，如果在某个闭包下引用该编辑器，直接调用UE.getEditor('editor')就能拿到相关的实例
-   var editor= UE.getEditor('editor');
-
-    editor.addListener('contentchange',function(){
-        alert('contentchange');
-    });
+    var ue = UE.getEditor('editor');
+    ue.addListener('ready',(e)=>{
+        console.log(e)
+        ue.fireEvent('showmessage',{
+            content : "editor.getLang('autosave.success')",
+            timeout : 2000
+        })
+    })
+    ue.ready = (e)=>{
+        console.log(e)
+        ue.fireEvent('showmessage',{
+            content : "editor.getLang('autosave.success')",
+            timeout : 2000
+        })
+    }
 
     function isFocus(e){
         alert(UE.getEditor('editor').isFocus());
@@ -148,10 +154,10 @@
     }
     function disableBtn(str) {
         var div = document.getElementById('btns');
-        var btns = domUtils.getElementsByTagName(div, "button");
+        var btns = UE.dom.domUtils.getElementsByTagName(div, "button");
         for (var i = 0, btn; btn = btns[i++];) {
             if (btn.id == str) {
-                domUtils.removeAttributes(btn, ["disabled"]);
+                UE.dom.domUtils.removeAttributes(btn, ["disabled"]);
             } else {
                 btn.setAttribute("disabled", "true");
             }
@@ -159,9 +165,9 @@
     }
     function enableBtn() {
         var div = document.getElementById('btns');
-        var btns = domUtils.getElementsByTagName(div, "button");
+        var btns = UE.dom.domUtils.getElementsByTagName(div, "button");
         for (var i = 0, btn; btn = btns[i++];) {
-            domUtils.removeAttributes(btn, ["disabled"]);
+            UE.dom.domUtils.removeAttributes(btn, ["disabled"]);
         }
     }
 
@@ -173,6 +179,6 @@
         UE.getEditor('editor').execCommand( "clearlocaldata" );
         alert("已清空草稿箱")
     }
-
 </script>
+</body>
 </html>
