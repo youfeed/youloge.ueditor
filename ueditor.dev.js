@@ -22,6 +22,9 @@
           'core/plugin.js',
           'core/keymap.js',
           'core/localstorage.js',
+
+          'plugins/youlogelink.js',
+
           'plugins/defaultfilter.js',
           'plugins/inserthtml.js',
           'plugins/autotypeset.js',
@@ -91,6 +94,7 @@
           'plugins/serverparam.js',
           'plugins/insertfile.js',
           'plugins/xssFilter.js',
+
           'ui/ui.js',
           'ui/uiutils.js',
           'ui/uibase.js',
@@ -117,6 +121,7 @@
           'ui/shortcutmenu.js',
           'ui/breakline.js',
           'ui/message.js',
+
           'adapter/editorui.js',
           'adapter/editor.js',
           'adapter/message.js',

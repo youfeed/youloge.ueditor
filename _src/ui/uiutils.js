@@ -2,7 +2,7 @@
     var browser = baidu.editor.browser,
         domUtils = baidu.editor.dom.domUtils;
 
-    var magic = '$EDITORUI';
+    var magic = '$UI';
     var root = window[magic] = {};
     var uidMagic = 'ID' + magic;
     var uidCount = 0;
@@ -120,7 +120,7 @@
         },
         setGlobal: function (id, obj){
             root[id] = obj;
-            return magic + '["' + id  + '"]';
+            return magic + `['${id}']`;
         },
         unsetGlobal: function (id){
             delete root[id];

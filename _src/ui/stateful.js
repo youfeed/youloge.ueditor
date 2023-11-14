@@ -1,3 +1,4 @@
+// 处理模态框样式
 (function (){
     var browser = baidu.editor.browser,
         domUtils = baidu.editor.dom.domUtils,
@@ -13,8 +14,7 @@
         ' onmouseout="$$.Stateful_onMouseOut(event, this);"' ));
     
     baidu.editor.ui.Stateful = {
-        alwalysHoverable: false,
-        target:null,//目标元素和this指向dom不一样
+        alwalysHoverable: false,target:null,//目标元素和this指向dom不一样
         Stateful_init: function (){
             this._Stateful_dGetHtmlTpl = this.getHtmlTpl;
             this.getHtmlTpl = this.Stateful_getHtmlTpl;

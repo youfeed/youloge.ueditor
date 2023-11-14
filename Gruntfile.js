@@ -42,7 +42,8 @@ module.exports = function (grunt) {
         server = grunt.option('server') || 'php',
         encode = grunt.option('encode') || 'utf8',
         disDir = "dist/",
-        banner = '/*!\n * UEditor\n * version: ' + packageJson.name + '\n * build: <%= new Date() %>\n */\n\n';
+        banner = '/*!\n * youloge.UEditor\n * version: ' + packageJson.version + '\n * build: <%= new Date() %>\n */\n\n';
+        // banner = `/*\n * youloge.UEditor\n * version: ${packageJson.version}\n * build: <%= new Date() %>\n *\n\n`;
 
     //init
     // (function () {
@@ -164,17 +165,7 @@ module.exports = function (grunt) {
                     },
                     {
                         from: 'ueditor.dev.js',
-                        to: packageJson.name + '.all.min.js'
-                    }
-                ]
-            },
-            gbkasp: {
-                src: [ disDir + 'asp/*.asp' ],
-                overwrite: true,
-                replacements: [
-                    {
-                        from: /65001/gi,
-                        to: '936'
+                        to: packageJson.name + '.all.js' // grunt.initConfig().replace.demo.replacements 把`to: packageJson.name + '.all.min.js'` 去掉min 就能看到 console.log
                     }
                 ]
             }
@@ -183,7 +174,6 @@ module.exports = function (grunt) {
         clean: {
             build: {
                 src: [
-                    disDir + "jsp/src",
                     disDir + "*/upload",
                     disDir + ".DS_Store",
                     disDir + "**/.DS_Store",
@@ -207,12 +197,6 @@ module.exports = function (grunt) {
 
         var tasks = [ 'concat', 'cssmin', 'uglify', 'copy:base', 'copy:' + server, 'copy:demo', 'replace:demo', 'clean' ];
 
-        if (encode === 'gbk') {
-            tasks.push('replace:fileEncode');
-            if (server === 'asp') {
-                tasks.push('replace:gbkasp');
-            }
-        }
 
         tasks.push('transcoding');
 
@@ -233,13 +217,9 @@ module.exports = function (grunt) {
 
         file = file.replace(/php\//ig, path).replace(/\.php/ig, suffix);
 
-        if (encode == 'gbk') {
-            file = file.replace(/utf-8/gi, 'gbk');
-        }
 
         //写入到dist
         if (grunt.file.write(disDir + filename, file)) {
-
             grunt.log.writeln('config file update success');
 
         } else {

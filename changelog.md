@@ -1,5 +1,16 @@
 #UEditor Change List
 
+
+## 1.4.4
+
+1. 只创建一个编辑器实例：默认ID `toolbar:#toolbar,editor:#editor`
+
+
+
+
+
+
+
 ##1.4.3
 ###bug修复&优化改进
 1. 修复hasContents接口在非ie下只有空格时判断还为真的问题

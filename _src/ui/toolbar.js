@@ -45,5 +45,4 @@
         }
     };
     utils.inherits(Toolbar, UIBase);
-
 })();

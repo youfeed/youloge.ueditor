@@ -234,7 +234,9 @@
         me.shortcutkeys = {};
         me.inputRules = [];
         me.outputRules = [];
-        //设置默认的常用属性
+        //设置默认的常用属性 setConfig
+        UE.utils.setConfig(Editor.defaultOptions(me))
+
         me.setOpt(Editor.defaultOptions(me));
 
         /* 尝试异步加载后台配置 */
@@ -248,7 +250,7 @@
 
         }else{
             utils.loadFile(document, {
-                src: me.options.langPath + me.options.lang + "/" + me.options.lang + ".js",
+                src: me.options.langPath + "/" + me.options.lang + ".js",
                 tag: "script",
                 type: "text/javascript",
                 defer: "defer"
@@ -1521,7 +1523,7 @@
             } else {
                 return '';
             }
-        }
+        },
     };
     utils.inherits(Editor, EventBase);
 })();

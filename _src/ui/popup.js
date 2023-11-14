@@ -1,5 +1,7 @@
 ///import core
 ///import uicore
+
+
 (function () {
     var utils = baidu.editor.utils,
         uiUtils = baidu.editor.ui.uiUtils,
@@ -28,8 +30,7 @@
 
     Popup.postHide = closeAllPopup;
 
-    var ANCHOR_CLASSES = ['edui-anchor-topleft','edui-anchor-topright',
-        'edui-anchor-bottomleft','edui-anchor-bottomright'];
+    var ANCHOR_CLASSES = ['edui-anchor-topleft','edui-anchor-topright','edui-anchor-bottomleft','edui-anchor-bottomright'];
     Popup.prototype = {
         SHADOW_RADIUS: 5,
         content: null,
@@ -63,6 +64,7 @@
             }
 
         },
+
         _UIBase_postRender: UIBase.prototype.postRender,
         postRender: function (){
 

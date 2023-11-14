@@ -1,9 +1,14 @@
 /**
- * @file
+ * @youloge 直接使用 fetch 改写
  * @module UE.ajax
  * @since 1.2.6.1
  */
-
+UE.fetch = (route,method,params={},AUTH=false)=>{
+    let {UKEY,SIGN,APIURL,VIPURL} = utils.getConfig();
+    let headers = {'Content-Type':'application/json'};
+    AUTH ? (headers[SIGN] = localStorage.getItem(SIGN)) : (headers.ukey = UKEY);
+    return fetch(...[`${AUTH?VIPURL:APIURL}/${route}`,{method:'POST',headers:headers,body:JSON.stringify({method:method,params:params})}]);
+}
 /**
  * 提供对ajax请求的支持
  * @module UE.ajax
@@ -23,8 +28,6 @@ UE.ajax = function() {
         }
     }
     var creatAjaxRequest = new Function('return new ' + fnStr);
-
-
     /**
      * 将json参数转化成适合ajax提交的参数列表
      * @param json
@@ -195,31 +198,18 @@ UE.ajax = function() {
          * ```javascript
          * //向sayhello.php发起一个异步的Ajax GET请求, 请求超时时间为10s， 请求完成后执行相应的回调。
          * UE.ajax.requeset( 'sayhello.php', {
-         *
          *     //请求方法。可选值： 'GET', 'POST'，默认值是'POST'
          *     method: 'GET',
-         *
          *     //超时时间。 默认为5000， 单位是ms
          *     timeout: 10000,
-         *
          *     //是否是异步请求。 true为异步请求， false为同步请求
          *     async: true,
-         *
          *     //请求携带的数据。如果请求为GET请求， data会经过stringify后附加到请求url之后。
-         *     data: {
-         *         name: 'ueditor'
-         *     },
-         *
+         *     data: { name: 'ueditor' },
          *     //请求成功后的回调， 该回调接受当前的XMLHttpRequest对象作为参数。
-         *     onsuccess: function ( xhr ) {
-         *         console.log( xhr.responseText );
-         *     },
-         *
+         *     onsuccess: function ( xhr ) { console.log( xhr.responseText ); },
          *     //请求失败或者超时后的回调。
-         *     onerror: function ( xhr ) {
-         *          alert( 'Ajax请求失败' );
-         *     }
-         *
+         *     onerror: function ( xhr ) { alert( 'Ajax请求失败' ); }
          * } );
          * ```
          */
@@ -243,6 +233,8 @@ UE.ajax = function() {
          * ```
          */
 		request:function(url, opts) {
+            let def = {method:'GET',timeout:''}
+            let {} = opts;
             if (opts && opts.dataType == 'jsonp') {
                 doJsonp(url, opts);
             } else {

@@ -5,8 +5,7 @@
 ///commandsDialog  dialogs\wordimage
 
 UE.plugin.register('wordimage',function(){
-    var me = this,
-        images = [];
+    var me = this,images = [];
     return {
         commands : {
             'wordimage':{

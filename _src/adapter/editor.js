@@ -388,13 +388,11 @@
 
             this.toolbars = toolbarUis;
         },
+        // _toolbarbox 迁移到 toolbar
         getHtmlTpl:function () {
             return '<div id="##" class="%%">' +
                 '<div id="##_toolbarbox" class="%%-toolbarbox">' +
-                (this.toolbars.length ?
-                    '<div id="##_toolbarboxouter" class="%%-toolbarboxouter"><div class="%%-toolbarboxinner">' +
-                        this.renderToolbarBoxHtml() +
-                        '</div></div>' : '') +
+                (this.toolbars.length ? '<div id="##_toolbarboxouter" class="%%-toolbarboxouter"><div class="%%-toolbarboxinner">' + this.renderToolbarBoxHtml() + '</div></div>' : '') +
                 '<div id="##_toolbarmsg" class="%%-toolbarmsg" style="display:none;">' +
                 '<div id = "##_upload_dialog" class="%%-toolbarmsg-upload" onclick="$$.showWordImageDialog();">' + this.editor.getLang("clickToUpload") + '</div>' +
                 '<div class="%%-toolbarmsg-close" onclick="$$.hideToolbarMsg();">x</div>' +
@@ -417,11 +415,17 @@
         showWordImageDialog:function () {
             this._dialogs['wordimageDialog'].open();
         },
+        // 
         renderToolbarBoxHtml:function () {
             var buff = [];
             for (var i = 0; i < this.toolbars.length; i++) {
                 buff.push(this.toolbars[i].renderHtml());
             }
+            document.querySelector('#toolbar').innerHTML = `<div id="edu1_toolbarboxouter" class="edui-toolbarboxouter edui-default"><div class="edui-toolbarboxinner edui-default">${buff.join('')}</div></div>`;
+            // document.querySelector('#toolbar').id="edu1_toolbarboxouter" 
+            // document.querySelector('#toolbar').className="edui-toolbarboxouter"
+            // console.info(buff.join(''))
+            return '';
             return buff.join('');
         },
         setFullScreen:function (fullscreen) {

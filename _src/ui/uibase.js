@@ -1,10 +1,6 @@
 (function () {
-    var utils = baidu.editor.utils,
-        uiUtils = baidu.editor.ui.uiUtils,
-        EventBase = baidu.editor.EventBase,
-        UIBase = baidu.editor.ui.UIBase = function () {
-        };
-
+    var utils = baidu.editor.utils,uiUtils = baidu.editor.ui.uiUtils,EventBase = baidu.editor.EventBase,
+    UIBase = baidu.editor.ui.UIBase = function () {};
     UIBase.prototype = {
         className:'',
         uiName:'',
