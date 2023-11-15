@@ -13,6 +13,7 @@
         },
         initUIBase:function () {
             this._globalKey = utils.unhtml(uiUtils.setGlobal(this.id, this));
+            // console.log('initUIBase',this._globalKey)
         },
         render:function (holder) {
             var html = this.renderHtml();

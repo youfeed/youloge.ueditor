@@ -34,10 +34,6 @@
 
                 UE.browser.ie && UE.browser.version === 6 && editor.container.ownerDocument.execCommand("BackgroundImageCache", false, true);
 
-                //display bottom-bar label based on config
-                if (editor.options.elementPathEnabled) {
-                    editor.ui.getDom('elementpath').innerHTML = '<div class="edui-editor-breadcrumb">' + editor.getLang("elementPathTip") + ':</div>';
-                }
                 if (editor.options.wordCount) {
                     function countFn() {
                         setCount(editor,me);
@@ -55,16 +51,13 @@
                 } else {
                     me.disableScale();
                 }
-                if (!editor.options.elementPathEnabled && !editor.options.wordCount && !editor.options.scaleEnabled) {
+                if (!editor.options.wordCount && !editor.options.scaleEnabled) {
                     editor.ui.getDom('elementpath').style.display = "none";
                     editor.ui.getDom('wordcount').style.display = "none";
                     editor.ui.getDom('scale').style.display = "none";
                 }
-
                 if (!editor.selection.isFocus())return;
                 editor.fireEvent('selectionchange', false, true);
-
-
             });
 
             editor.addListener('mousedown', function (t, evt) {
@@ -147,19 +140,9 @@
                     countDom.innerHTML = errMsg;
                     editor.fireEvent("wordcountoverflow");
                 } else {
-                    countDom.innerHTML = msg.replace("{#leave}", max - count).replace("{#count}", count);
+                    countDom.innerHTML = msg.replace("{#words}", max).replace("{#count}", count);
                 }
             }
-
-            editor.addListener('selectionchange', function () {
-                if (editor.options.elementPathEnabled) {
-                    me[(editor.queryCommandState('elementpath') == -1 ? 'dis' : 'en') + 'ableElementPath']()
-                }
-                if (editor.options.scaleEnabled) {
-                    me[(editor.queryCommandState('scale') == -1 ? 'dis' : 'en') + 'ableScale']();
-
-                }
-            });
             var popup = new baidu.editor.ui.Popup({
                 editor:editor,
                 content:'',
@@ -409,33 +392,6 @@
             // console.info(buff.join(''))
             return '';
             return buff.join('');
-        },
-        _updateElementPath:function () {
-            var bottom = this.getDom('elementpath'), list;
-            if (this.elementPathEnabled && (list = this.editor.queryCommandValue('elementpath'))) {
-
-                var buff = [];
-                for (var i = 0, ci; ci = list[i]; i++) {
-                    buff[i] = this.formatHtml('<span unselectable="on" onclick="$$.editor.execCommand(&quot;elementpath&quot;, &quot;' + i + '&quot;);">' + ci + '</span>');
-                }
-                bottom.innerHTML = '<div class="edui-editor-breadcrumb" onmousedown="return false;">' + this.editor.getLang("elementPathTip") + ': ' + buff.join(' &gt; ') + '</div>';
-
-            } else {
-                bottom.style.display = 'none'
-            }
-        },
-        disableElementPath:function () {
-            var bottom = this.getDom('elementpath');
-            bottom.innerHTML = '';
-            bottom.style.display = 'none';
-            this.elementPathEnabled = false;
-
-        },
-        enableElementPath:function () {
-            var bottom = this.getDom('elementpath');
-            bottom.style.display = '';
-            this.elementPathEnabled = true;
-            this._updateElementPath();
         },
         _scale:function () {
             var doc = document,

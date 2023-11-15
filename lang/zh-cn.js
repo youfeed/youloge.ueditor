@@ -85,7 +85,7 @@ UE.I18N['zh-cn'] = {
     },
     'elementPathTip':"元素路径",
     'wordCountTip':"字数统计",
-    'wordCountMsg':'当前已输入{#count}个字符, 您还可以输入{#leave}个字符。 ',
+    'wordCountMsg':'{#count}/{#words}',
     'wordOverFlowMsg':'<span style="color:red;">字数超出最大允许值，服务器可能拒绝保存！</span>',
     'ok':"确认",
     'cancel':"取消",
@@ -262,7 +262,7 @@ UE.I18N['zh-cn'] = {
             'lang_input_vhspace':"边 距：",
             'lang_input_title':"描 述：",
             'lang_input_align':'图片浮动方式：',
-            'lang_imgLoading':"　图片加载中……",
+            'lang_imgLoading':"图片加载中……",
             'lang_start_upload':"开始上传",
             'lock':{'title':"锁定宽高比例"}, //属性
             'searchType':{'title':"图片类型", 'options':["新闻", "壁纸", "表情", "头像"]}, //select的option

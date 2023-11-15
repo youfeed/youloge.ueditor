@@ -4,13 +4,11 @@
 UE.plugins['defaultfilter'] = function () {
     var me = this;
     me.setOpt({
-        'allowDivTransToP':true,
         'disabledTableInTable':true
     });
     //默认的过滤处理
     //进入编辑器的内容处理
     me.addInputRule(function (root) {
-        var allowDivTransToP = this.options.allowDivTransToP;
         var val;
         function tdParent(node){
             while(node && node.type == 'element'){
@@ -111,26 +109,7 @@ UE.plugins['defaultfilter'] = function () {
                         if(val && /^line number\d+/.test(val)){
                             break;
                         }
-                        if(!allowDivTransToP){
-                            break;
-                        }
-                        var tmpNode, p = UE.uNode.createElement('p');
-                        while (tmpNode = node.firstChild()) {
-                            if (tmpNode.type == 'text' || !UE.dom.dtd.$block[tmpNode.tagName]) {
-                                p.appendChild(tmpNode);
-                            } else {
-                                if (p.firstChild()) {
-                                    node.parentNode.insertBefore(p, node);
-                                    p = UE.uNode.createElement('p');
-                                } else {
-                                    node.parentNode.insertBefore(tmpNode, node);
-                                }
-                            }
-                        }
-                        if (p.firstChild()) {
-                            node.parentNode.insertBefore(p, node);
-                        }
-                        node.parentNode.removeChild(node);
+                        // 默认不处理 div转p
                         break;
                     case 'dl':
                         node.tagName = 'ul';
@@ -164,6 +143,7 @@ UE.plugins['defaultfilter'] = function () {
                 }
 
             }
+            // 允许 youloge- 开头的组件
 //            if(node.type == 'comment'){
 //                node.parentNode.removeChild(node);
 //            }

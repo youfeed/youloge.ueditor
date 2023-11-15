@@ -9,7 +9,7 @@ UE.registerUI('message', function(editor) {
     me.addListener('ready', function(){
         holder = document.getElementById(me.ui.id + '_message_holder');
         updateHolderPos();
-        setTimeout(function(){
+        setTimeout(function(){ 
             updateHolderPos();
         }, 500);
     });
@@ -46,13 +46,17 @@ UE.registerUI('message', function(editor) {
         var message = _messageItems[id];
         message && message.hide();
     });
-
+    // toolbarbox 移出去了
     function updateHolderPos(){
-        var toolbarbox = me.ui.getDom('toolbarbox');
-        if (toolbarbox) {
-            holder.style.top = toolbarbox.offsetHeight + 3 + 'px';
+        if(holder){
+            holder.style.zIndex = Math.max(me.options.zIndex, me.iframe.style.zIndex) + 1;
         }
-        holder.style.zIndex = Math.max(me.options.zIndex, me.iframe.style.zIndex) + 1;
+        // var toolbarbox = me.ui.getDom('toolbarbox');
+        // console.log(toolbarbox);
+        // if (toolbarbox) {
+        //     holder.style.top = toolbarbox.offsetHeight + 3 + 'px';
+        // }
+        
     }
 
 });

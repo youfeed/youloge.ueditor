@@ -373,6 +373,7 @@
          * @param { Element } containerDom 直接指定容器对象
          * @remind 执行该方法,会触发ready事件
          * @warning 必须且只能调用一次
+         * @youloge 兜底 768*501 px
          */
         render: function (container) {
             var me = this, options = me.options,
@@ -401,14 +402,14 @@
 
                 container.style.zIndex = options.zIndex;
 
-                var html = ( ie && browser.version < 9  ? '' : '<!DOCTYPE html>') +
-                    '<html xmlns=\'http://www.w3.org/1999/xhtml\' class=\'view\' ><head>' +
+                var html = '<!DOCTYPE html>' +
+                    '<head>' +
                     '<style type=\'text/css\'>' +
                     //设置四周的留边
-                    '.view{padding:0;word-wrap:break-word;cursor:text;height:90%;}\n' +
+                    // '.view{padding:0;word-wrap:break-word;cursor:text;height:90%;}\n' +
                     //设置默认字体和字号
                     //font-family不能呢随便改，在safari下fillchar会有解析问题
-                    'body{margin:8px;font-family:sans-serif;font-size:16px;}' +
+                    // 'body{margin:8px;font-family:sans-serif;font-size:16px;}' +
                     //设置段落间距
                     'p{margin:5px 0;}</style>' +
                     ( options.iframeCssUrl ? '<link rel=\'stylesheet\' type=\'text/css\' href=\'' + utils.unhtml(options.iframeCssUrl) + '\'/>' : '' ) +

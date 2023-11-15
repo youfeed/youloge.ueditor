@@ -90,7 +90,6 @@
           'plugins/simpleupload.js',
           'plugins/serverparam.js',
           'plugins/insertfile.js',
-          'plugins/xssFilter.js',
 
           'ui/ui.js',
           'ui/uiutils.js',

@@ -1,36 +1,49 @@
-body {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
-    font-size: 14px;
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
+:root{
+    --articleFontsize:17px
 }
-
+body {
+    font-family: "Microsoft YaHei UI", -apple-system-font, BlinkMacSystemFont, "Helvetica Neue", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", Arial, sans-serif;
+    box-sizing: border-box;
+    line-height: 1.6;
+    letter-spacing: 0.034em;
+    padding: 0 95px 20px;
+    color: rgba(0, 0, 0, 0.9);
+    font-size: var(--articleFontsize);
+    overflow: hidden;
+    text-align: justify;
+    margin: 0;
+}
+body *{
+    box-sizing: border-box;
+    word-wrap: break-word !important;
+}
+.view{
+    word-break: break-word;
+    cursor: text;
+    min-height: 440px;
+    word-wrap: break-word;
+    -webkit-hyphens: auto;
+    hyphens: auto;
+    overflow: hidden;
+}
 a {
     color: #09f;
     text-decoration: none;
 }
-
 a:hover,
 a:focus {
     color: #09f;
     text-decoration: none;
 }
-
 blockquote {
     padding: 0 0 0 15px;
     margin: 0 0 18px;
     border-left: 5px solid #EEE;
 }
-
 img + br {
     display: block;
     padding: 4px 0;
     content: ' ';
-}
-
-body p {
-    margin-bottom: 1em;
 }
 
 iframe {
@@ -56,7 +69,7 @@ pre {
 /*交互操作*/
 img {
     cursor: pointer;
-}
+} 
 
 .edui-quick-operate-active {
     background: #E6ECFF;
