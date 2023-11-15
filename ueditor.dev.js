@@ -40,7 +40,6 @@
           'plugins/blockquote.js',
           'plugins/convertcase.js',
           'plugins/indent.js',
-          'plugins/print.js',
           'plugins/preview.js',
           'plugins/selectall.js',
           'plugins/paragraph.js',
@@ -81,14 +80,12 @@
           'plugins/searchreplace.js',
           'plugins/customstyle.js',
           'plugins/catchremoteimage.js',
-          'plugins/snapscreen.js',
           'plugins/insertparagraph.js',
           'plugins/webapp.js',
           'plugins/template.js',
           'plugins/music.js',
           'plugins/autoupload.js',
           'plugins/autosave.js',
-          'plugins/charts.js',
           'plugins/section.js',
           'plugins/simpleupload.js',
           'plugins/serverparam.js',
@@ -124,8 +121,7 @@
 
           'adapter/editorui.js',
           'adapter/editor.js',
-          'adapter/message.js',
-          'adapter/autosave.js'
+          'adapter/message.js'
       ],
       baseURL = './_src/';
   for (var i=0,pi;pi = paths[i++];) {

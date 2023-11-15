@@ -56,23 +56,22 @@
             (editor.options.allHtmlEnabled ? editor.getAllHtml() : editor.getContent(null, null, true)) :
             ''
     }
+    //初始化插件
     function loadPlugins(me){
-        //初始化插件
         for (var pi in UE.plugins) {
             UE.plugins[pi].call(me);
         }
-
     }
     function checkCurLang(I18N){
         for(var lang in I18N){
             return lang
         }
     }
-
     function langReadied(me){
         me.langIsReady = true;
-
         me.fireEvent("langReady");
+        // 加载插件
+        loadPlugins(me);
     }
 
     /**
@@ -236,9 +235,7 @@
         me.outputRules = [];
         //设置默认的常用属性 setConfig
         UE.utils.setConfig(Editor.defaultOptions(me))
-
         me.setOpt(Editor.defaultOptions(me));
-
         /* 尝试异步加载后台配置 */
         me.loadServerConfig();
 
@@ -250,7 +247,7 @@
 
         }else{
             utils.loadFile(document, {
-                src: me.options.langPath + "/" + me.options.lang + ".js",
+                src: me.options.langPath + me.options.lang + ".js",
                 tag: "script",
                 type: "text/javascript",
                 defer: "defer"
@@ -259,8 +256,8 @@
                 langReadied(me);
             });
         }
-
         UE.instants['ueditorInstant' + me.uid] = me;
+        
     };
     Editor.prototype = {
          registerCommand : function(name,obj){
@@ -378,8 +375,7 @@
          * @warning 必须且只能调用一次
          */
         render: function (container) {
-            var me = this,
-                options = me.options,
+            var me = this, options = me.options,
                 getStyleValue=function(attr){
                     return parseInt(domUtils.getComputedStyle(container,attr));
                 };
@@ -476,7 +472,7 @@
                 geckoSel.removeAllRanges();
             }
             this._initEvents();
-            //为form提交提供一个隐藏的textarea
+            //为form提交提供一个隐藏的textarea 
             for (var form = this.iframe.parentNode; !domUtils.isBody(form); form = form.parentNode) {
                 if (form.tagName == 'FORM') {
                     me.form = form;
@@ -503,11 +499,9 @@
                 } else
                     this.setContent(options.initialContent, false, true);
             }
-
             //编辑器不能为空内容
-
             if (domUtils.isEmptyNode(me.body)) {
-                me.body.innerHTML = '<p>' + (browser.ie ? '' : '<br/>') + '</p>';
+                me.body.innerHTML = '<p><br/></p>';
             }
             //如果要求focus, 就把光标定位到内容开始
             if (options.focus) {
@@ -519,9 +513,6 @@
             }
             if (!me.container) {
                 me.container = this.iframe.parentNode;
-            }
-            if (options.fullscreen && me.ui) {
-                me.ui.setFullScreen(true);
             }
 
             try {
@@ -719,7 +710,7 @@
          * } );
          * ```
          */
-        getContent: function (cmd, fn,notSetCursor,ignoreBlank,formatter) {
+        getContent: function (cmd, fn,notSetCursor,ignoreBlank,formatter){
             var me = this;
             if (cmd && utils.isFunction(cmd)) {
                 fn = cmd;
@@ -910,8 +901,7 @@
          */
         focus: function (toEnd) {
             try {
-                var me = this,
-                    rng = me.selection.getRange();
+                var me = this, rng = me.selection.getRange();
                 if (toEnd) {
                     var node = me.body.lastChild;
                     if(node && node.nodeType == 1 && !dtd.$empty[node.tagName]){
@@ -963,9 +953,7 @@
          * @private
          */
         _initEvents: function () {
-            var me = this,
-                doc = me.document,
-                win = me.window;
+            var me = this,doc = me.document,win = me.window;
             me._proxyDomEvent = utils.bind(me._proxyDomEvent, me);
             domUtils.on(doc, ['click', 'contextmenu', 'mousedown', 'keydown', 'keyup', 'keypress', 'mouseup', 'mouseover', 'mouseout', 'selectstart'], me._proxyDomEvent);
             domUtils.on(win, ['focus', 'blur'], me._proxyDomEvent);
@@ -1068,8 +1056,7 @@
          * @return { * } 返回命令函数运行的返回值
          */
         _callCmdFn: function (fnName, args) {
-            var cmdName = args[0].toLowerCase(),
-                cmd, cmdFn;
+            var cmdName = args[0].toLowerCase(),cmd, cmdFn;
             cmd = this.commands[cmdName] || UE.commands[cmdName];
             cmdFn = cmd && cmd[fnName];
             //没有querycommandstate或者没有command的都默认返回0
@@ -1306,7 +1293,7 @@
             function clear() {
                 var me = this;
                 if (me.document.getElementById('initContent')) {
-                    me.body.innerHTML = '<p>' + (ie ? '' : '<br/>') + '</p>';
+                    me.body.innerHTML = '<p><br/></p>';
                     me.removeListener('firstBeforeExecCommand focus', clear);
                     setTimeout(function () {
                         me.focus();
@@ -1318,7 +1305,6 @@
             return function (cont) {
                 var me = this;
                 me.body.innerHTML = '<p id="initContent">' + cont + '</p>';
-
                 me.addListener('firstBeforeExecCommand focus', clear);
             }
         }(),

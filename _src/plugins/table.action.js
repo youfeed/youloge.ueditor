@@ -639,26 +639,6 @@ UE.plugins['table'] = function () {
         me.addListener("getAllHtml", function () {
             removeSelectedClass(me.document.getElementsByTagName("td"));
         });
-        //修正全屏状态下插入的表格宽度在非全屏状态下撑开编辑器的情况
-        me.addListener("fullscreenchanged", function (type, fullscreen) {
-            if (!fullscreen) {
-                var ratio = this.body.offsetWidth / document.body.offsetWidth,
-                    tables = domUtils.getElementsByTagName(this.body, "table");
-                utils.each(tables, function (table) {
-                    if (table.offsetWidth < me.body.offsetWidth) return false;
-                    var tds = domUtils.getElementsByTagName(table, "td"),
-                        backWidths = [];
-                    utils.each(tds, function (td) {
-                        backWidths.push(td.offsetWidth);
-                    });
-                    for (var i = 0, td; td = tds[i]; i++) {
-                        td.setAttribute("width", Math.floor(backWidths[i] * ratio));
-                    }
-                    table.setAttribute("width", Math.floor(getTableWidth(me, needIEHack, getDefaultValue(me))))
-                });
-            }
-        });
-
         //重写execCommand命令，用于处理框选时的处理
         var oldExecCommand = me.execCommand;
         me.execCommand = function (cmd, datatat) {

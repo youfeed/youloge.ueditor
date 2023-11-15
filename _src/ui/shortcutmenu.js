@@ -98,11 +98,7 @@
             }
         } ,
         setOpacity : function (el , value) {
-            if (browser.ie && browser.version < 9) {
-                el.style.filter = "alpha(opacity = " + parseFloat (value) * 100 + ");"
-            } else {
-                el.style.opacity = value;
-            }
+            el.style.opacity = value;
         } ,
         getSubMenuMark : function () {
             isSubMenuShow = false;

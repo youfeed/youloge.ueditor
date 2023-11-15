@@ -109,16 +109,6 @@ UE.plugins['autofloat'] = function() {
             domUtils.on(window, ['scroll','resize'], updateFloating);
             me.addListener('keydown', defer_updateFloating);
 
-            me.addListener('beforefullscreenchange', function (t, enabled){
-                if (enabled) {
-                    unsetFloating();
-                }
-            });
-            me.addListener('fullscreenchanged', function (t, enabled){
-                if (!enabled) {
-                    updateFloating();
-                }
-            });
             me.addListener('sourcemodechanged', function (t, enabled){
                 setTimeout(function (){
                     updateFloating();

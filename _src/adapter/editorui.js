@@ -40,7 +40,6 @@
         'map':'~/dialogs/map/map.html',
         'gmap':'~/dialogs/gmap/gmap.html',
         'insertvideo':'~/dialogs/video/video.html',
-        'help':'~/dialogs/help/help.html',
         'preview':'~/dialogs/preview/preview.html',
         'emotion':'~/dialogs/emotion/emotion.html',
         'wordimage':'~/dialogs/wordimage/wordimage.html',
@@ -50,19 +49,17 @@
         'edittable':'~/dialogs/table/edittable.html',
         'edittd':'~/dialogs/table/edittd.html',
         'webapp':'~/dialogs/webapp/webapp.html',
-        'snapscreen':'~/dialogs/snapscreen/snapscreen.html',
         'scrawl':'~/dialogs/scrawl/scrawl.html',
         'music':'~/dialogs/music/music.html',
         'template':'~/dialogs/template/template.html',
-        'background':'~/dialogs/background/background.html',
-        'charts': '~/dialogs/charts/charts.html'
+        'background':'~/dialogs/background/background.html'
     };
     //为工具栏添加按钮，以下都是统一的按钮触发命令，所以写在一起
     var btnCmds = ['undo', 'redo', 'formatmatch',
         'bold', 'italic', 'underline', 'fontborder', 'touppercase', 'tolowercase',
         'strikethrough', 'subscript', 'superscript', 'source', 'indent', 'outdent',
         'blockquote', 'pasteplain', 'pagebreak',
-        'selectall', 'print','horizontal', 'removeformat', 'time', 'date', 'unlink',
+        'selectall', 'horizontal', 'removeformat', 'time', 'date', 'unlink',
         'insertparagraphbeforetable', 'insertrow', 'insertcol', 'mergeright', 'mergedown', 'deleterow',
         'deletecol', 'splittorows', 'splittocols', 'splittocells', 'mergecells', 'deletetable', 'drafts'];
 
@@ -181,9 +178,9 @@
 
 
     var dialogBtns = {
-        noOk:['searchreplace', 'help', 'spechars', 'webapp','preview'],
+        noOk:['searchreplace', 'spechars', 'webapp','preview'],
         ok:['attachment', 'anchor', 'link', 'insertimage', 'map', 'gmap', 'insertframe', 'wordimage',
-            'insertvideo', 'insertframe', 'edittip', 'edittable', 'edittd', 'scrawl', 'template', 'music', 'background', 'charts']
+            'insertvideo', 'insertframe', 'edittip', 'edittable', 'edittd', 'scrawl', 'template', 'music', 'background']
     };
 
     for (var p in dialogBtns) {
@@ -207,7 +204,7 @@
                                 className:'edui-for-' + cmd,
                                 title:title,
                                 holdScroll: cmd === 'insertimage',
-                                fullscreen: /charts|preview/.test(cmd),
+                                fullscreen: /preview/.test(cmd), // 这里改写到 生成预览网址 然后跳转
                                 closeDialog:editor.getLang("closeDialog")
                             }, type == 'ok' ? {
                                 buttons:[
@@ -260,7 +257,7 @@
                                 }
                             },
                             theme:editor.options.theme,
-                            disabled:(cmd == 'scrawl' && editor.queryCommandState("scrawl") == -1) || ( cmd == 'charts' )
+                            disabled:(cmd == 'scrawl' && editor.queryCommandState("scrawl") == -1)
                         });
                         editorui.buttons[cmd] = ui;
                         editor.addListener('selectionchange', function () {
@@ -283,54 +280,7 @@
         })(p, dialogBtns[p]);
     }
 
-    editorui.snapscreen = function (editor, iframeUrl, title) {
-        title = editor.options.labelMap['snapscreen'] || editor.getLang("labelMap.snapscreen") || '';
-        var ui = new editorui.Button({
-            className:'edui-for-snapscreen',
-            title:title,
-            onclick:function () {
-                editor.execCommand("snapscreen");
-            },
-            theme:editor.options.theme
-
-        });
-        editorui.buttons['snapscreen'] = ui;
-        iframeUrl = iframeUrl || (editor.options.iframeUrlMap || {})["snapscreen"] || iframeUrlMap["snapscreen"];
-        if (iframeUrl) {
-            var dialog = new editorui.Dialog({
-                iframeUrl:editor.ui.mapUrl(iframeUrl),
-                editor:editor,
-                className:'edui-for-snapscreen',
-                title:title,
-                buttons:[
-                    {
-                        className:'edui-okbutton',
-                        label:editor.getLang("ok"),
-                        editor:editor,
-                        onclick:function () {
-                            dialog.close(true);
-                        }
-                    },
-                    {
-                        className:'edui-cancelbutton',
-                        label:editor.getLang("cancel"),
-                        editor:editor,
-                        onclick:function () {
-                            dialog.close(false);
-                        }
-                    }
-                ]
-
-            });
-            dialog.render();
-            editor.ui._dialogs["snapscreenDialog"] = dialog;
-        }
-        editor.addListener('selectionchange', function () {
-            ui.setDisabled(editor.queryCommandState('snapscreen') == -1);
-        });
-        return ui;
-    };
-
+    // 支持基本高亮
     editorui.insertcode = function (editor, list, title) {
         list = editor.options['insertcode'] || [];
         title = editor.options.labelMap['insertcode'] || editor.getLang("labelMap.insertcode") || '';
@@ -393,8 +343,8 @@
         });
         return ui;
     };
+    // 字体
     editorui.fontfamily = function (editor, list, title) {
-
         list = editor.options['fontfamily'] || [];
         title = editor.options.labelMap['fontfamily'] || editor.getLang("labelMap.fontfamily") || '';
         if (!list.length) return;
@@ -454,7 +404,7 @@
         });
         return ui;
     };
-
+    // 字号 10-50px
     editorui.fontsize = function (editor, list, title) {
         title = editor.options.labelMap['fontsize'] || editor.getLang("labelMap.fontsize") || '';
         list = list || editor.options['fontsize'] || [];
@@ -496,11 +446,10 @@
                     ui.setValue(editor.queryCommandValue('FontSize'));
                 }
             }
-
         });
         return ui;
     };
-
+    // 段落
     editorui.paragraph = function (editor, list, title) {
         title = editor.options.labelMap['paragraph'] || editor.getLang("labelMap.paragraph") || '';
         list = editor.options['paragraph'] || [];
@@ -550,8 +499,6 @@
         });
         return ui;
     };
-
-
     //自定义标题
     editorui.customstyle = function (editor) {
         var list = editor.options['customstyle'] || [],
@@ -765,28 +712,6 @@
         })(cl)
     }
 
-    editorui.fullscreen = function (editor, title) {
-        title = editor.options.labelMap['fullscreen'] || editor.getLang("labelMap.fullscreen") || '';
-        var ui = new editorui.Button({
-            className:'edui-for-fullscreen',
-            title:title,
-            theme:editor.options.theme,
-            onclick:function () {
-                if (editor.ui) {
-                    editor.ui.setFullScreen(!editor.ui.isFullScreen());
-                }
-                this.setChecked(editor.ui.isFullScreen());
-            }
-        });
-        editorui.buttons['fullscreen'] = ui;
-        editor.addListener('selectionchange', function () {
-            var state = editor.queryCommandState('fullscreen');
-            ui.setDisabled(state == -1);
-            ui.setChecked(editor.ui.isFullScreen());
-        });
-        return ui;
-    };
-
     // 表情
     editorui["emotion"] = function (editor, iframeUrl) {
         var cmd = "emotion";
@@ -803,7 +728,7 @@
         });
         return ui;
     };
-
+    // 自动排版
     editorui.autotypeset = function (editor) {
         var ui = new editorui.AutoTypeSetButton({
             editor:editor,

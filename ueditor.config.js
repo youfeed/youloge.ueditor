@@ -25,27 +25,28 @@
      * 配置项主体。注意，此处所有涉及到路径的配置别遗漏URL变量。
      */
     window.UEDITOR_CONFIG = {
-
+        selector:['#toolbar','#editor'],
         //为编辑器实例添加一个路径，这个不能被注释
         UEDITOR_HOME_URL: URL
-
         // 服务器统一请求接口路径
-        , serverUrl: URL + "php/controller.php"
-
+        ,serverUrl: URL + "php/controller.php"
         //工具栏上的所有的功能按钮和下拉框，可以在new编辑器的实例时选择自己需要的重新定义
-        , toolbars: [[
-            'fullscreen', 'source', '|', 'undo', 'redo', '|',
-            'bold', 'italic', 'underline', 'fontborder', 'strikethrough', 'superscript', 'subscript', 'removeformat', 'formatmatch', 'autotypeset', 'blockquote', 'pasteplain', '|', 'forecolor', 'backcolor', 'insertorderedlist', 'insertunorderedlist', 'selectall', 'cleardoc', '|',
+        ,toolbars: [[
+            'undo', 'redo','|','removeformat', 'formatmatch', '|', 'fontsize','bold', 'italic', 'underline', 'fontborder', 'strikethrough','forecolor', 'backcolor',
+            'superscript', 'subscript', 'autotypeset', 'blockquote', 'pasteplain', '|',  'insertorderedlist', 'insertunorderedlist', 'selectall', 'cleardoc', '|',
             'rowspacingtop', 'rowspacingbottom', 'lineheight', '|',
-            'customstyle', 'paragraph', 'fontfamily', 'fontsize', '|',
-            'directionalityltr', 'directionalityrtl', 'indent', '|','link', //'simpleupload',
+            'customstyle', 'paragraph', 'fontfamily',  '|',
+            'directionalityltr', 'directionalityrtl', 'indent', '|',// 'link', 'simpleupload',
             'justifyleft', 'justifycenter', 'justifyright', 'justifyjustify', '|', 'touppercase', 'tolowercase', '|',
             'unlink', 'anchor', '|', 'imagenone', 'imageleft', 'imageright', 'imagecenter', '|',
             'insertimage', 'emotion', 'scrawl', 'insertvideo', 'music', 'attachment', 'map', 'gmap', 'insertframe', 'insertcode', 'webapp', 'pagebreak', 'template', 'background', '|',
-            'horizontal', 'date', 'time', 'spechars', 'snapscreen', 'wordimage', '|',
-            'inserttable', 'deletetable', 'insertparagraphbeforetable', 'insertrow', 'deleterow', 'insertcol', 'deletecol', 'mergecells', 'mergeright', 'mergedown', 'splittocells', 'splittorows', 'splittocols', 'charts', '|',
-            'print', 'preview', 'searchreplace', 'drafts', 'help'
+            'horizontal', 'date', 'time', 'spechars', 'wordimage', '|',
+            'inserttable',  '|',
+            'preview', 'searchreplace', 'drafts', '|', 'source',
         ]]
+        // 参考 `tinymce`进行配置 插件触发方式不一定非要从toolbar点击 允许分别加载 `toolbar` 按需展示
+        ,plugins:[]
+        ,toolbar:[]
         //当鼠标放在工具栏上时显示的tooltip提示,留空支持自动多语言配置，否则以配置值为准
         //,labelMap:{
         //    'anchor':'', 'undo':''
@@ -101,7 +102,6 @@
         //自动保存间隔时间， 单位ms
         //,saveInterval: 500
 
-        //,fullscreen : false //是否开启初始化时即全屏，默认关闭
 
         //,imagePopup:true      //图片操作的浮层开关，默认打开
 

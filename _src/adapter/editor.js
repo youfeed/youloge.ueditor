@@ -1,7 +1,5 @@
 ///import core
-///commands 全屏
-///commandsName FullScreen
-///commandsTitle  全屏
+///commands 去除全屏
 (function () {
     var utils = baidu.editor.utils,
         uiUtils = baidu.editor.ui.uiUtils,
@@ -21,8 +19,7 @@
             this._dialogs = {};
             this.initUIBase();
             this._initToolbars();
-            var editor = this.editor,
-                me = this;
+            var editor = this.editor,me = this;
 
             editor.addListener('ready', function () {
                 //提供getDialog方法
@@ -126,9 +123,6 @@
             editor.addListener('keydown', function (t, evt) {
                 if (pastePop)    pastePop.dispose(evt);
                 var keyCode = evt.keyCode || evt.which;
-                if(evt.altKey&&keyCode==90){
-                    UE.ui.buttons['fullscreen'].onclick();
-                }
             });
             editor.addListener('wordcount', function (type) {
                 setCount(this,me);
@@ -345,19 +339,6 @@
                         if (baidu.editor.ui[toolbarItem]) {
                             toolbarItemUi = new baidu.editor.ui[toolbarItem](editor);
                         }
-
-                        //fullscreen这里单独处理一下，放到首行去
-                        if (toolbarItem == 'fullscreen') {
-                            if (toolbarUis && toolbarUis[0]) {
-                                toolbarUis[0].items.splice(0, 0, toolbarItemUi);
-                            } else {
-                                toolbarItemUi && toolbarUi.items.splice(0, 0, toolbarItemUi);
-                            }
-
-                            continue;
-
-
-                        }
                     } else {
                         toolbarItemUi = toolbarItem;
                     }
@@ -371,12 +352,13 @@
 
             //接受外部定制的UI
 
-            utils.each(UE._customizeUI,function(obj,key){
+            utils.each(UE._customizeUI,function(obj,key){ 
                 var itemUI,index;
                 if(obj.id && obj.id != editor.key){
-                   return false;
+                    return false;
                 }
                 itemUI = obj.execFn.call(editor,editor,key);
+                console.log('itemUI_customizeUI',itemUI,key,editor.key)
                 if(itemUI){
                     index = obj.index;
                     if(index === undefined){
@@ -427,100 +409,6 @@
             // console.info(buff.join(''))
             return '';
             return buff.join('');
-        },
-        setFullScreen:function (fullscreen) {
-
-            var editor = this.editor,
-                container = editor.container.parentNode.parentNode;
-            if (this._fullscreen != fullscreen) {
-                this._fullscreen = fullscreen;
-                this.editor.fireEvent('beforefullscreenchange', fullscreen);
-                if (baidu.editor.browser.gecko) {
-                    var bk = editor.selection.getRange().createBookmark();
-                }
-                if (fullscreen) {
-                    while (container.tagName != "BODY") {
-                        var position = baidu.editor.dom.domUtils.getComputedStyle(container, "position");
-                        nodeStack.push(position);
-                        container.style.position = "static";
-                        container = container.parentNode;
-                    }
-                    this._bakHtmlOverflow = document.documentElement.style.overflow;
-                    this._bakBodyOverflow = document.body.style.overflow;
-                    this._bakAutoHeight = this.editor.autoHeightEnabled;
-                    this._bakScrollTop = Math.max(document.documentElement.scrollTop, document.body.scrollTop);
-
-                    this._bakEditorContaninerWidth = editor.iframe.parentNode.offsetWidth;
-                    if (this._bakAutoHeight) {
-                        //当全屏时不能执行自动长高
-                        editor.autoHeightEnabled = false;
-                        this.editor.disableAutoHeight();
-                    }
-
-                    document.documentElement.style.overflow = 'hidden';
-                    //修复，滚动条不收起的问题
-
-                    window.scrollTo(0,window.scrollY);
-                    this._bakCssText = this.getDom().style.cssText;
-                    this._bakCssText1 = this.getDom('iframeholder').style.cssText;
-                    editor.iframe.parentNode.style.width = '';
-                    this._updateFullScreen();
-                } else {
-                    while (container.tagName != "BODY") {
-                        container.style.position = nodeStack.shift();
-                        container = container.parentNode;
-                    }
-                    this.getDom().style.cssText = this._bakCssText;
-                    this.getDom('iframeholder').style.cssText = this._bakCssText1;
-                    if (this._bakAutoHeight) {
-                        editor.autoHeightEnabled = true;
-                        this.editor.enableAutoHeight();
-                    }
-
-                    document.documentElement.style.overflow = this._bakHtmlOverflow;
-                    document.body.style.overflow = this._bakBodyOverflow;
-                    editor.iframe.parentNode.style.width = this._bakEditorContaninerWidth + 'px';
-                    window.scrollTo(0, this._bakScrollTop);
-                }
-                if (browser.gecko && editor.body.contentEditable === 'true') {
-                    var input = document.createElement('input');
-                    document.body.appendChild(input);
-                    editor.body.contentEditable = false;
-                    setTimeout(function () {
-                        input.focus();
-                        setTimeout(function () {
-                            editor.body.contentEditable = true;
-                            editor.fireEvent('fullscreenchanged', fullscreen);
-                            editor.selection.getRange().moveToBookmark(bk).select(true);
-                            baidu.editor.dom.domUtils.remove(input);
-                            fullscreen && window.scroll(0, 0);
-                        }, 0)
-                    }, 0)
-                }
-
-                if(editor.body.contentEditable === 'true'){
-                    this.editor.fireEvent('fullscreenchanged', fullscreen);
-                    this.triggerLayout();
-                }
-
-            }
-        },
-        _updateFullScreen:function () {
-            if (this._fullscreen) {
-                var vpRect = uiUtils.getViewportRect();
-                this.getDom().style.cssText = 'border:0;position:absolute;left:0;top:' + (this.editor.options.topOffset || 0) + 'px;width:' + vpRect.width + 'px;height:' + vpRect.height + 'px;z-index:' + (this.getDom().style.zIndex * 1 + 100);
-                uiUtils.setViewportOffset(this.getDom(), { left:0, top:this.editor.options.topOffset || 0 });
-                this.editor.setHeight(vpRect.height - this.getDom('toolbarbox').offsetHeight - this.getDom('bottombar').offsetHeight - (this.editor.options.topOffset || 0),true);
-                //不手动调一下，会导致全屏失效
-                if(browser.gecko){
-                    try{
-                        window.onresize();
-                    }catch(e){
-
-                    }
-
-                }
-            }
         },
         _updateElementPath:function () {
             var bottom = this.getDom('elementpath'), list;
@@ -582,23 +470,6 @@
                 domUtils.on(editorDocument, "mouseup", up);
                 domUtils.on(doc, "mouseup", up);
             }
-
-            var me = this;
-            //by xuheng 全屏时关掉缩放
-            this.editor.addListener('fullscreenchanged', function (e, fullScreen) {
-                if (fullScreen) {
-                    me.disableScale();
-
-                } else {
-                    if (me.editor.options.scaleEnabled) {
-                        me.enableScale();
-                        var tmpNode = me.editor.document.createElement('span');
-                        me.editor.body.appendChild(tmpNode);
-                        me.editor.body.style.height = Math.max(domUtils.getXY(tmpNode).y, me.editor.iframe.offsetHeight - 20) + 'px';
-                        domUtils.remove(tmpNode)
-                    }
-                }
-            });
             function move(event) {
                 clearSelection();
                 var e = event || window.event;
@@ -654,29 +525,11 @@
                 domUtils.un(scale, "mousedown", down);
             };
         },
-        isFullScreen:function () {
-            return this._fullscreen;
-        },
         postRender:function () {
             UIBase.prototype.postRender.call(this);
             for (var i = 0; i < this.toolbars.length; i++) {
                 this.toolbars[i].postRender();
             }
-            var me = this;
-            var timerId,
-                domUtils = baidu.editor.dom.domUtils,
-                updateFullScreenTime = function () {
-                    clearTimeout(timerId);
-                    timerId = setTimeout(function () {
-                        me._updateFullScreen();
-                    });
-                };
-            domUtils.on(window, 'resize', updateFullScreenTime);
-
-            me.addListener('destroy', function () {
-                domUtils.un(window, 'resize', updateFullScreenTime);
-                clearTimeout(timerId);
-            })
         },
         showToolbarMsg:function (msg, flag) {
             this.getDom('toolbarmsg_label').innerHTML = msg;
@@ -817,7 +670,7 @@
      */
     /**
      * @name getEditor
-     * @since 1.2.4+
+     * @youloge 1.2.4+
      * @grammar UE.getEditor(id,[opt])  =>  Editor实例
      * @desc 提供一个全局的方法得到编辑器实例
      *
@@ -830,6 +683,16 @@
      *  UE.getEditor('containerId'); //返回刚创建的实例
      *
      */
+    // 初始化一次 只有一个实例
+		//  selector:['#toolbar','#editor'],
+    UE.init = (opt)=>{
+        if(instances){ instances.destroy(); }
+				// let [toolbar,editor] = opt.selector;
+        // let {} = opt;
+        instances = new UE.ui.Editor(opt);
+        instances.render();
+        return editor;
+    }
     UE.getEditor = function (id, opt) {
         var editor = instances[id];
         if (!editor) {
@@ -847,8 +710,9 @@
             delete instances[id]
         }
     };
-
+    // 转义message 后清楚
     UE.registerUI = function(uiName,fn,index,editorId){
+        console.log('registerUI',uiName,'fn',index,editorId)
         utils.each(uiName.split(/\s+/), function (name) {
             UE._customizeUI[name] = {
                 id : editorId,

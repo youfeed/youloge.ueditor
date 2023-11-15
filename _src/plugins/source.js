@@ -179,14 +179,7 @@
                         sourceEditor.setContent(html);
                     };
 
-                    setTimeout(function (){
-                        sourceEditor.select();
-                        me.addListener('fullscreenchanged', function(){
-                            try{
-                                sourceEditor.getCodeMirror().refresh()
-                            }catch(e){}
-                        });
-                    });
+                    sourceEditor.select();
 
                     //重置getContent，源码模式下取值也能是最新的数据
                     oldGetContent = me.getContent;
@@ -263,8 +256,7 @@
             if (sourceMode) {
                 //源码模式下可以开启的命令
                 return cmdName in {
-                    'source' : 1,
-                    'fullscreen' : 1
+                    'source' : 1
                 } ? 1 : -1
             }
             return oldQueryCommandState.apply(this, arguments);

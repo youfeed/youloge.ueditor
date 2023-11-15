@@ -2,9 +2,12 @@
 .edui-default .edui-popup {
     z-index: 3000;
     background-color: #ffffff;
-    width:auto;
-    height:auto;
-
+    width: auto;
+    height: auto;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    margin-top: 1px;
 }
 
 .edui-default .edui-popup .edui-shadow {
@@ -15,25 +18,17 @@
 }
 
 .edui-default .edui-popup-content {
-    border:1px solid #ccc;
-    border: 1px solid rgba(0, 0, 0, 0.2);
-    *border-right-width: 2px;
-    *border-bottom-width: 2px;
-    -webkit-border-radius: 6px;
-    -moz-border-radius: 6px;
-    border-radius: 6px;
-    -webkit-box-shadow: 0 3px 4px rgba(0, 0, 0, 0.2);
-    -moz-box-shadow: 0 3px 4px rgba(0, 0, 0, 0.2);
-    box-shadow: 0 3px 4px rgba(0, 0, 0, 0.2);
-    -webkit-background-clip: padding-box;
-    -moz-background-clip: padding;
-    background-clip: padding-box;
-    padding: 5px;
-    background:#ffffff;
+    font-size: 13px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    transition: .25s;
+    color: #333;
+    background-color: #FFF;
+    padding: 10px;
+    border-radius: 5px;
 }
 
 .edui-default .edui-popup .edui-bordereraser {
-    background-color: white;
+    background-color: transparent;
     height: 3px;
 }
 
@@ -67,7 +62,7 @@
     border-right: 1px solid gray;
 }
 
-.edui-popup div{
-    width:auto;
-    height:auto;
+.edui-popup div {
+    width: auto;
+    height: auto;
 }

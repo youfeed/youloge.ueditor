@@ -31,6 +31,7 @@
         }, 0 )
     };
     utils.loadFile(document,{
+        // themes/
         href:editor.options.themePath + editor.options.theme + "/dialogbase.css?cache="+Math.random(),
         tag:"link",
         type:"text/css",

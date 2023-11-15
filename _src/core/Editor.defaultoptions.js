@@ -6,6 +6,8 @@
 UE.Editor.defaultOptions = function(editor){
     var _url = editor.options.UEDITOR_HOME_URL;
     return {
+        // 文档ID 初始化时候 尝试从远程读取 草稿
+        UUID:'uuid',
         // 开发者KEY
         UKEY:"qRjE+HMLB8WcnAvdcon5Lx2BSGid7OdQUd5ozRV8QHj4sgP91+Y6xMfhrHZbONGpLErJGMZFZ8GAcEwINSE4VjwdEvna0DwHUJ3zzQNFlQg8s8nhqo4/I3y00q31eYi4", 
         // 用户签名请求头名
@@ -23,7 +25,6 @@ UE.Editor.defaultOptions = function(editor){
         focus: false,
         focusInEnd: true,
         autoClearEmptyNode: true,
-        fullscreen: false,
         readonly: false,
         zIndex: 999,
         imagePopup: true,

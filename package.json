@@ -2,7 +2,7 @@
     "name": "youloge.ueditor",
     "title": "youloge.ueditor",
     "description": "基于UEditor定制编辑器",
-    "version": "1.5.1",
+    "version": "1.5.2",
     "homepage": "http://docs.youloge.com/ueditor",
     "scripts": {
         "dev": "cd ./dist && http-server",

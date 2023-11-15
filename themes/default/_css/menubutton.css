@@ -6,13 +6,15 @@
 .edui-default .edui-listitem {
     padding: 1px;
     white-space: nowrap;
+    cursor: pointer;
 }
 
 .edui-default .edui-list .edui-state-hover {
     position: relative;
-    background-color: #fff5d4;
-    border: 1px solid #dcac6c;
+    background-color: #EEE;
+    border: 1px solid #EEE;
     padding: 0;
+    border-radius: 3px;
 }
 
 .edui-default .edui-for-fontfamily .edui-listitem-label {
@@ -23,6 +25,7 @@
     line-height: 22px;
     padding-left: 5px;
 }
+
 .edui-default .edui-for-insertcode .edui-listitem-label {
     min-width: 120px;
     _width: 120px;
@@ -31,6 +34,7 @@
     line-height: 22px;
     padding-left: 5px;
 }
+
 .edui-default .edui-for-underline .edui-listitem-label {
     min-width: 120px;
     _width: 120px;
@@ -42,7 +46,7 @@
     min-width: 120px;
     _width: 120px;
     padding: 3px 5px;
-
+    cursor: pointer;
 }
 
 .edui-default .edui-for-paragraph .edui-listitem-label {

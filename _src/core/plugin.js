@@ -64,9 +64,9 @@ UE.plugin = function(){
                 }else if(plugin.afterDisabled){
                     plugin.afterDisabled.call(editor)
                 }
-
+ 
             });
-            //向下兼容
+            //向下兼容 后续清楚
             utils.each(UE.plugins,function(plugin){
                 plugin.call(editor);
             });

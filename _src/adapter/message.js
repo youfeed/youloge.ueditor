@@ -5,7 +5,7 @@ UE.registerUI('message', function(editor) {
     var holder;
     var _messageItems = [];
     var me = editor;
-
+ 
     me.addListener('ready', function(){
         holder = document.getElementById(me.ui.id + '_message_holder');
         updateHolderPos();
