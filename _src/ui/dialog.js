@@ -327,4 +327,4 @@
         }
     };
     utils.inherits(Dialog, UIBase);
-})();
+})(); 
