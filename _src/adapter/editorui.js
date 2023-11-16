@@ -6,11 +6,10 @@
     var editorui = baidu.editor.ui;
     var _Dialog = editorui.Dialog;
     editorui.buttons = {};
-
+    console.log('editorui',editorui,UE);
     editorui.Dialog = function (options) {
         var dialog = new _Dialog(options);
         dialog.addListener('hide', function () {
-
             if (dialog.editor) {
                 var editor = dialog.editor;
                 try {
@@ -176,7 +175,7 @@
         }(ci);
     }
 
-
+    // 改变dialog渲染方式
     var dialogBtns = {
         noOk:['searchreplace', 'spechars', 'webapp','preview'],
         ok:['attachment', 'anchor', 'link', 'insertimage', 'map', 'gmap', 'insertframe', 'wordimage',
@@ -191,7 +190,10 @@
                     continue;
                 }
                 (function (cmd) {
+                    console.log('editor.options.iframeUrlMap',cmd)
                     editorui[cmd] = function (editor, iframeUrl, title) {
+                        // debugger;
+                        console.log('editor.options.iframeUrlMap2',cmd,editor.options.iframeUrlMap)
                         iframeUrl = iframeUrl || (editor.options.iframeUrlMap || {})[cmd] || iframeUrlMap[cmd];
                         title = editor.options.labelMap[cmd] || editor.getLang("labelMap." + cmd) || '';
 
@@ -274,12 +276,13 @@
                         });
 
                         return ui;
-                    };
+                    }; 
                 })(ci.toLowerCase())
             }
         })(p, dialogBtns[p]);
     }
-
+    // 
+    // new editorui['link'](editor,iframeUrl,'title');
     // 支持基本高亮
     editorui.insertcode = function (editor, list, title) {
         list = editor.options['insertcode'] || [];
@@ -714,6 +717,7 @@
 
     // 表情
     editorui["emotion"] = function (editor, iframeUrl) {
+        
         var cmd = "emotion";
         var ui = new editorui.MultiMenuPop({
             title:editor.options.labelMap[cmd] || editor.getLang("labelMap." + cmd + "") || '',
@@ -722,7 +726,7 @@
             iframeUrl:editor.ui.mapUrl(iframeUrl || (editor.options.iframeUrlMap || {})[cmd] || iframeUrlMap[cmd])
         });
         editorui.buttons[cmd] = ui;
-
+        console.log('emotion',iframeUrl,editor.options.labelMap[cmd])
         editor.addListener('selectionchange', function () {
             ui.setDisabled(editor.queryCommandState(cmd) == -1)
         });

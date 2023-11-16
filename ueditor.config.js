@@ -30,8 +30,11 @@
         UEDITOR_HOME_URL: URL
         // 服务器统一请求接口路径
         ,serverUrl: URL + "php/controller.php"
-        //工具栏上的所有的功能按钮和下拉框，可以在new编辑器的实例时选择自己需要的重新定义
-        ,toolbars: [[
+        // 定义需要下载的插件(/plugins/插件名/plugin.js)
+        ,plugins:['link']
+        // 工具栏由`plugins 派生出来`
+        ,toolbar:[]
+        ,toolbars: [
             'undo', 'redo','|','removeformat', 'formatmatch', '|', 'fontsize','bold', 'italic', 'underline', 'fontborder', 'strikethrough','forecolor', 'backcolor',
             'superscript', 'subscript', 'autotypeset', 'blockquote', 'pasteplain', '|',  'insertorderedlist', 'insertunorderedlist', 'selectall', 'cleardoc', '|',
             'rowspacingtop', 'rowspacingbottom', 'lineheight', '|',
@@ -43,10 +46,10 @@
             'horizontal', 'date', 'time', 'spechars', 'wordimage', '|',
             'inserttable',  '|',
             'preview', 'searchreplace', 'drafts', '|', 'source',
-        ]]
+        ]
         // 参考 `tinymce`进行配置 插件触发方式不一定非要从toolbar点击 允许分别加载 `toolbar` 按需展示
-        ,plugins:[]
-        ,toolbar:[]
+        
+        // 
         //当鼠标放在工具栏上时显示的tooltip提示,留空支持自动多语言配置，否则以配置值为准
         //,labelMap:{
         //    'anchor':'', 'undo':''
@@ -333,12 +336,6 @@
         //,codeMirrorCssUrl:URL + "third-party/codemirror/codemirror.css"
         //编辑器初始化完成后是否进入源码模式，默认为否。
         //,sourceEditorFirst:false
-
-        //iframeUrlMap
-        //dialog内容的路径 ～会被替换成URL,垓属性一旦打开，将覆盖所有的dialog的默认路径
-        //,iframeUrlMap:{
-        //    'anchor':'~/dialogs/anchor/anchor.html',
-        //}
 
         //allowLinkProtocol 允许的链接地址，有这些前缀的链接地址不会自动添加http
         //, allowLinkProtocols: ['http:', 'https:', '#', '/', 'ftp:', 'mailto:', 'tel:', 'git:', 'svn:']

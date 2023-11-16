@@ -4,10 +4,10 @@ module.exports = function (grunt) {
 
     var fs = require("fs"),
         Util = {
-
             jsBasePath: '_src/',
             parseBasePath: '_parse/',
             cssBasePath: 'themes/default/_css/',
+            pluginPath:'plugin/',
 
             fetchScripts: function (readFile, basePath) {
 
@@ -43,17 +43,6 @@ module.exports = function (grunt) {
         encode = grunt.option('encode') || 'utf8',
         disDir = "dist/",
         banner = '/*!\n * youloge.UEditor\n * version: ' + packageJson.version + '\n * build: <%= new Date() %>\n */\n\n';
-        // banner = `/*\n * youloge.UEditor\n * version: ${packageJson.version}\n * build: <%= new Date() %>\n *\n\n`;
-
-    //init
-    // (function () {
-
-    //     server = typeof server === "string" ? server.toLowerCase() : 'php';
-    //     encode = typeof encode === "string" ? encode.toLowerCase() : 'utf8';
-
-    //     disDir = 'dist/' + encode + '-' + server + '/';
-
-    // })();
 
     grunt.initConfig({
         pkg: packageJson,
@@ -113,7 +102,7 @@ module.exports = function (grunt) {
                 files: [
                     {
 
-                        src: [ '*.html', 'themes/iframe.css', 'themes/default/dialogbase.css', 'themes/default/images/**', 'dialogs/**', 'lang/**', 'third-party/**' ],
+                        src: [ '*.html', 'themes/iframe.css', 'themes/default/dialogbase.css', 'themes/default/images/**', 'dialogs/**', 'lang/**','plugins/**','third-party/**' ],
                         dest: disDir
 
                     }
@@ -126,13 +115,6 @@ module.exports = function (grunt) {
                         dest: disDir + 'index.html'
                     }
                 ]
-            },
-            php: {
-
-                expand: true,
-                src: 'php/**',
-                dest: disDir
-
             }
         },
         transcoding: {
@@ -165,7 +147,8 @@ module.exports = function (grunt) {
                     },
                     {
                         from: 'ueditor.dev.js',
-                        to: packageJson.name + '.all.js' // grunt.initConfig().replace.demo.replacements 把`to: packageJson.name + '.all.min.js'` 去掉min 就能看到 console.log
+                        to: packageJson.name + '.all.js' 
+                        // grunt.initConfig().replace.demo.replacements 把`to: packageJson.name + '.all.min.js'` 去掉min 就能看到 console.log
                     }
                 ]
             }
@@ -194,20 +177,12 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-clean');
 
     grunt.registerTask('default', 'UEditor build', function () {
-
-        var tasks = [ 'concat', 'cssmin', 'uglify', 'copy:base', 'copy:' + server, 'copy:demo', 'replace:demo', 'clean' ];
-
-
+        var tasks = [ 'concat', 'cssmin', 'uglify', 'copy:base', 'copy:demo', 'replace:demo', 'clean' ];
         tasks.push('transcoding');
-
         //config修改
         updateConfigFile();
-
         grunt.task.run(tasks);
-
     });
-
-
     function updateConfigFile() {
 
         var filename = 'ueditor.config.js',
@@ -216,12 +191,9 @@ module.exports = function (grunt) {
             suffix = server === "net" ? ".ashx" : "." + server;
 
         file = file.replace(/php\//ig, path).replace(/\.php/ig, suffix);
-
-
         //写入到dist
         if (grunt.file.write(disDir + filename, file)) {
             grunt.log.writeln('config file update success');
-
         } else {
             grunt.log.warn('config file update error');
         }

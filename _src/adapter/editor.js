@@ -301,57 +301,50 @@
             }
 
         },
+        // 改写下菜单栏目
         _initToolbars:function () {
             var editor = this.editor;
+            var plugins = editor.options.plugins;
             var toolbars = this.toolbars || [];
-            var toolbarUis = [];
-            for (var i = 0; i < toolbars.length; i++) {
-                var toolbar = toolbars[i];
-                var toolbarUi = new baidu.editor.ui.Toolbar({theme:editor.options.theme});
-                for (var j = 0; j < toolbar.length; j++) {
-                    var toolbarItem = toolbar[j];
-                    var toolbarItemUi = null;
-                    if (typeof toolbarItem == 'string') {
-                        toolbarItem = toolbarItem.toLowerCase();
-                        if (toolbarItem == '|') {
-                            toolbarItem = 'Separator';
-                        }
-                        if(toolbarItem == '||'){
-                            toolbarItem = 'Breakline';
-                        }
-                        if (baidu.editor.ui[toolbarItem]) {
-                            toolbarItemUi = new baidu.editor.ui[toolbarItem](editor);
-                        }
-                    } else {
-                        toolbarItemUi = toolbarItem;
+            var Toolbar = new baidu.editor.ui.Toolbar({theme:editor.options.theme});
+            let xyz = plugins.map(is=>new baidu.editor.ui[is](editor));
+            console.log(xyz,plugins)//plugins
+            toolbars.forEach(Item=>{
+                if(typeof Item === 'string'){
+                    var ItemUi = null;Item = Item.toLowerCase();
+                    if(Item === '|'){
+                        Item = 'Separator'
                     }
-                    if (toolbarItemUi && toolbarItemUi.id) {
-
-                        toolbarUi.add(toolbarItemUi);
+                    if(Item === '||'){
+                        Item = 'Breakline'
                     }
+                    if (baidu.editor.ui[Item]) {
+                        ItemUi = new baidu.editor.ui[Item](editor);
+                    }
+                }else{
+                    ItemUi = Item
                 }
-                toolbarUis[i] = toolbarUi;
-            }
-
+                if(ItemUi){
+                    Toolbar.add(ItemUi)
+                }
+            })
             //接受外部定制的UI
-
             utils.each(UE._customizeUI,function(obj,key){ 
                 var itemUI,index;
                 if(obj.id && obj.id != editor.key){
                     return false;
                 }
                 itemUI = obj.execFn.call(editor,editor,key);
-                console.log('itemUI_customizeUI',itemUI,key,editor.key)
                 if(itemUI){
                     index = obj.index;
                     if(index === undefined){
-                        index = toolbarUi.items.length;
+                        index = Toolbar.items.length;
                     }
-                    toolbarUi.add(itemUI,index)
+                    Toolbar.add(itemUI,index)
                 }
             });
-
-            this.toolbars = toolbarUis;
+            //
+            this.toolbars = [Toolbar];
         },
         // _toolbarbox 迁移到 toolbar
         getHtmlTpl:function () {
@@ -380,15 +373,13 @@
         showWordImageDialog:function () {
             this._dialogs['wordimageDialog'].open();
         },
-        // 
+        // 渲染到指定ID位置
         renderToolbarBoxHtml:function () {
-            var buff = [];
-            for (var i = 0; i < this.toolbars.length; i++) {
-                buff.push(this.toolbars[i].renderHtml());
-            }
-            document.querySelector('#toolbar').innerHTML = `<div id="edu1_toolbarboxouter" class="edui-toolbarboxouter edui-default"><div class="edui-toolbarboxinner edui-default">${buff.join('')}</div></div>`;
+            let html = this.toolbars.map(is=>is.renderHtml()).join('')
+     
+            document.querySelector('#toolbar').classList.add('edui-toolbarboxouter','edui-default')
+            document.querySelector('#toolbar').innerHTML = `<div id="edu1_toolbarboxouter" class="edui-toolbarboxouter edui-default"><div class="edui-toolbarboxinner edui-default">${html}</div></div>`;
             // document.querySelector('#toolbar').id="edu1_toolbarboxouter" 
-            // document.querySelector('#toolbar').className="edui-toolbarboxouter"
             // console.info(buff.join(''))
             return '';
             return buff.join('');
@@ -512,11 +503,7 @@
         }
     };
     utils.inherits(EditorUI, baidu.editor.ui.UIBase);
-
-
     var instances = {};
-
-
     UE.ui.Editor = function (options) {
         var editor = new UE.Editor(options);
         editor.options.editor = editor;

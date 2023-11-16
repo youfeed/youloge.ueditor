@@ -1,3 +1,4 @@
+// Toolbar 后面想办法 挂载到 baidu.editor上
 (function (){
     var utils = baidu.editor.utils,
         uiUtils = baidu.editor.ui.uiUtils,
@@ -7,10 +8,10 @@
             this.initToolbar();
         };
     Toolbar.prototype = {
-        items: null,
+        items: [],
         initToolbar: function (){
-            this.items = this.items || [];
-            this.initUIBase();
+            // this.items = this.items || [];
+            this.initUIBase(); 
         },
         add: function (item,index){
             if(index === undefined){
@@ -21,13 +22,8 @@
 
         },
         getHtmlTpl: function (){
-            var buff = [];
-            for (var i=0; i<this.items.length; i++) {
-                buff[i] = this.items[i].renderHtml();
-            }
-            return '<div id="##" class="edui-toolbar %%" onselectstart="return false;" onmousedown="return $$._onMouseDown(event, this);">' +
-                buff.join('') +
-                '</div>'
+            let html = this.items.map(is=>is.renderHtml()).join('')
+            return `<div id="##" class="edui-toolbar %%" onselectstart="return false;" onmousedown="return $$._onMouseDown(event, this);">${html}</div>`
         },
         postRender: function (){
             var box = this.getDom();
