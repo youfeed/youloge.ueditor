@@ -24,7 +24,7 @@
 
 .edui-default .edui-toolbar .edui-combox .edui-combox-body {
     border: 1px solid var(--edui-color-border);
-    background-color: white;
+    background-color: #f1f1f1;
     border-radius: 2px;
     -webkit-border-radius: 2px;
     -moz-border-radius: 2px;

@@ -307,8 +307,12 @@
             var plugins = editor.options.plugins;
             var toolbars = this.toolbars || [];
             var Toolbar = new baidu.editor.ui.Toolbar({theme:editor.options.theme});
-            let xyz = plugins.map(is=>new baidu.editor.ui[is](editor));
-            console.log(xyz,plugins)//plugins
+            plugins.forEach(Item=>{
+                console.log('loadplugins',Item)
+                if (baidu.editor.ui[Item]) {
+                    new baidu.editor.ui[Item](editor);
+                }
+            });
             toolbars.forEach(Item=>{
                 if(typeof Item === 'string'){
                     var ItemUi = null;Item = Item.toLowerCase();

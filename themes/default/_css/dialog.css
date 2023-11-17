@@ -256,7 +256,11 @@
     width: 590px;
     height: 420px;
 }
-
+/*audio-dialog*/
+.edui-default .edui-for-music .edui-dialog-content {
+    width: 590px;
+    height: 420px;
+}
 /*audio-dialog*/
 .edui-default .edui-for-insertaudio .edui-dialog-content {
     width: 590px;

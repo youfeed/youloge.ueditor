@@ -31,7 +31,7 @@
         // 服务器统一请求接口路径
         ,serverUrl: URL + "php/controller.php"
         // 定义需要下载的插件(/plugins/插件名/plugin.js)
-        ,plugins:['link']
+        ,plugins:['link','simpleupload','insertfile']
         // 工具栏由`plugins 派生出来`
         ,toolbar:[]
         ,toolbars: [

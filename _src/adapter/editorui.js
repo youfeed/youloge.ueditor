@@ -190,10 +190,10 @@
                     continue;
                 }
                 (function (cmd) {
-                    console.log('editor.options.iframeUrlMap',cmd)
+                    // console.log('editor.options.iframeUrlMap',cmd)
                     editorui[cmd] = function (editor, iframeUrl, title) {
                         // debugger;
-                        console.log('editor.options.iframeUrlMap2',cmd,editor.options.iframeUrlMap)
+                        // console.log('editor.options.iframeUrlMap2',cmd,editor.options.iframeUrlMap)
                         iframeUrl = iframeUrl || (editor.options.iframeUrlMap || {})[cmd] || iframeUrlMap[cmd];
                         title = editor.options.labelMap[cmd] || editor.getLang("labelMap." + cmd) || '';
 
@@ -750,34 +750,41 @@
     };
 
     /* 简单上传插件 */
-    editorui["simpleupload"] = function (editor) {
-        var name = 'simpleupload',
-            ui = new editorui.Button({
-                className:'edui-for-' + name,
-                title:editor.options.labelMap[name] || editor.getLang("labelMap." + name) || '',
-                onclick:function () {},
-                theme:editor.options.theme,
-                showText:false
-            });
-        editorui.buttons[name] = ui;
-        editor.addListener('ready', function() {
-            var b = ui.getDom('body'),
-                iconSpan = b.children[0];
-            editor.fireEvent('simpleuploadbtnready', iconSpan);
-        });
-        editor.addListener('selectionchange', function (type, causeByUi, uiReady) {
-            var state = editor.queryCommandState(name);
-            if (state == -1) {
-                ui.setDisabled(true);
-                ui.setChecked(false);
-            } else {
-                if (!uiReady) {
-                    ui.setDisabled(false);
-                    ui.setChecked(state);
-                }
-            }
-        });
-        return ui;
-    };
+    // editorui["simpleupload"] = function (editor) {
+    //     let id = Math.random().toString(36);
+    //     let hideFile = document.createElement('input');
+    //     hideFile.id = 'file'+id;
+    //     hideFile.type = 'file';
+    //     hideFile.accept = 'image/*';
+    //     document.body.appendChild(hideFile);
+    //     editor.addListener('ready', function() {
+    //         editor.fireEvent('simpleuploadbtnready', hideFile);
+    //         // var b = ui.getDom('body'),
+    //         //     iconSpan = b.children[0];
+    //     });
+
+    //     var name = 'simpleupload',
+    //     ui = new editorui.Button({
+    //         className:'edui-for-' + name,
+    //         title:editor.options.labelMap[name] || editor.getLang("labelMap." + name) || '',
+    //         onclick:function () {},
+    //         theme:editor.options.theme,
+    //         showText:false
+    //     });
+    //     editorui.buttons[name] = ui;
+    //     editor.addListener('selectionchange', function (type, causeByUi, uiReady) {
+    //         var state = editor.queryCommandState(name);
+    //         if (state == -1) {
+    //             ui.setDisabled(true);
+    //             ui.setChecked(false);
+    //         } else {
+    //             if (!uiReady) {
+    //                 ui.setDisabled(false);
+    //                 ui.setChecked(state);
+    //             }
+    //         }
+    //     });
+    //     return ui;
+    // };
 
 })();

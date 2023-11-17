@@ -7,6 +7,7 @@
 
 ## 更新日志
 
+- 1.5.5 增加`plugins`参数 允许静默初始化插件
 - 1.5.2 继续抽离代码：在重构结构，像`tinymce 插件方向`靠齐
 - 1.5.1 增强结构 清楚更多插件，改写部分插件 允许外部触发
 - 1.5.0 改变目录解构`正式开发从这里开始` 打包`Releases 发布`
@@ -29,6 +30,10 @@
 - [jian27com/ueditor-plus-typecho](https://github.com/jian27com/ueditor-plus-typecho) UEditor-for-Typecho 二开
 - [LinkPoly/UEditor-for-Typecho](https://github.comLinkPoly/UEditor-for-Typecho) UEditor-for-Typecho
 :::
+
+
+![image](https://github.com/youfeed/youloge.ueditor/assets/22223510/334f396c-f583-486e-b654-c8fdb71891d9)
+
 
 这是第四次 再次整理富文本编辑器了：需要功能贴合，容易定制，样式自由并不简单
 
