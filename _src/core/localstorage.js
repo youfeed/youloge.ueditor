@@ -1,11 +1,31 @@
 //存储媒介封装
-var LocalStorage = UE.LocalStorage = (function () {
+var Storage = UE.Storage = (function(){
+    var primary = 'youloge@editor';
+    return {
+        initConfig:(item)=>{
+            return sessionStorage.setItem(primary,JSON.stringify(item));
+        },
+        useConfig:()=>{
+            return JSON.parse(sessionStorage.getItem(primary)||"{}");
+        },
+        useStorage:()=>{
+            return JSON.parse(localStorage.getItem(primary)||"{}");
+        },
+        setConfog:(key,val)=>{
+            let item = Storage.useConfig()
+            sessionStorage.setItem(primary,JSON.stringify({...item,...{[key]:val}}))
+        },
+        setStorage:(key,val)=>{
+            let item = Storage.useStorage()
+            localStorage.setItem(primary,JSON.stringify({...item,...{[key]:val}}))
+        }
+    }
+})()
 
+var LocalStorage = UE.LocalStorage = (function () {
     var storage = window.localStorage || getUserData() || null,
         LOCAL_FILE = 'localStorage';
-
     return {
-
         saveLocalData: function (key, data) {
 
             if (storage && data) {

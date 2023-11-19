@@ -13,7 +13,6 @@
           'core/Selection.js',
           'core/Editor.js',
           'core/Options.js',
-          'core/loadconfig.js',
           'core/ajax.js',
           'core/filterword.js',
           'core/node.js',
@@ -22,9 +21,12 @@
           'core/plugin.js',
           'core/keymap.js',
           'core/localstorage.js',
-
+          
           'plugins/youlogelink.js',
-
+          'plugins/login.js',
+          'plugins/drafts.js',
+          'plugins/article.js',
+          
           'plugins/defaultfilter.js',
           'plugins/inserthtml.js',
           'plugins/autotypeset.js',
@@ -50,7 +52,6 @@
           'plugins/lineheight.js',
           'plugins/insertcode.js',
           'plugins/cleardoc.js',
-          'plugins/anchor.js',
           'plugins/wordcount.js',
           'plugins/pagebreak.js',
           'plugins/wordimage.js',

@@ -1,6 +1,6 @@
 ///import core
 ///plugin 编辑器默认的过滤转换机制
-
+// @youloge 增加 youloge-开头的原生组件
 UE.plugins['defaultfilter'] = function () {
     var me = this;
     me.setOpt({

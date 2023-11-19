@@ -18,6 +18,7 @@
             this.editor.ui = this;
             this._dialogs = {};
             this.initUIBase();
+            this._initPlugins();
             this._initToolbars();
             var editor = this.editor,me = this;
 
@@ -301,18 +302,24 @@
             }
 
         },
-        // 改写下菜单栏目
-        _initToolbars:function () {
+
+        // 初始化插件 
+        _initPlugins:function () {
             var editor = this.editor;
             var plugins = editor.options.plugins;
-            var toolbars = this.toolbars || [];
-            var Toolbar = new baidu.editor.ui.Toolbar({theme:editor.options.theme});
             plugins.forEach(Item=>{
-                console.log('loadplugins',Item)
+                // console.log('loadplugins',Item,baidu.editor.ui[Item])
                 if (baidu.editor.ui[Item]) {
                     new baidu.editor.ui[Item](editor);
                 }
             });
+        },
+        // 改写下菜单栏目
+        _initToolbars:function () {
+            var editor = this.editor;
+            var toolbars = this.toolbars || [];
+            var Toolbar = new baidu.editor.ui.Toolbar({theme:editor.options.theme});
+
             toolbars.forEach(Item=>{
                 if(typeof Item === 'string'){
                     var ItemUi = null;Item = Item.toLowerCase();
@@ -347,20 +354,36 @@
                     Toolbar.add(itemUI,index)
                 }
             });
-            //
             this.toolbars = [Toolbar];
+            // 渲染Toolbar
+            let html = this.toolbars.map(is=>is.renderHtml()).join('')
+            document.querySelector('#toolbar').classList.add('edui-toolbarboxouter','edui-default')
+            document.querySelector('#toolbar').innerHTML = `<div id="edu1_toolbarboxouter" class="edui-toolbarboxouter edui-default"><div class="edui-toolbarboxinner edui-default">${html}</div></div>`;
         },
         // _toolbarbox 迁移到 toolbar
+    //     <div id="metadata">
+    //     <div class="poster">
+    //         <img src="" >
+    //     </div>
+    //     <div>
+    //         <div class="title">文章信息</div>
+    //         <div class="intro">文章信息</div>
+    //     </div>
+    //     <div>
+    //         <div class="label">#22</div>
+    //     </div>
+    // </div>
         getHtmlTpl:function () {
             return '<div id="##" class="%%">' +
+                '<form id="metadata" class="metadata"></form>' +
                 '<div id="##_toolbarbox" class="%%-toolbarbox">' +
-                (this.toolbars.length ? '<div id="##_toolbarboxouter" class="%%-toolbarboxouter"><div class="%%-toolbarboxinner">' + this.renderToolbarBoxHtml() + '</div></div>' : '') +
-                '<div id="##_toolbarmsg" class="%%-toolbarmsg" style="display:none;">' +
-                '<div id = "##_upload_dialog" class="%%-toolbarmsg-upload" onclick="$$.showWordImageDialog();">' + this.editor.getLang("clickToUpload") + '</div>' +
-                '<div class="%%-toolbarmsg-close" onclick="$$.hideToolbarMsg();">x</div>' +
-                '<div id="##_toolbarmsg_label" class="%%-toolbarmsg-label"></div>' +
-                '<div style="height:0;overflow:hidden;clear:both;"></div>' +
-                '</div>' +
+                // (this.toolbars.length ? '<div id="##_toolbarboxouter" class="%%-toolbarboxouter"><div class="%%-toolbarboxinner">' + this.renderToolbarBoxHtml() + '</div></div>' : '') +
+                // '<div id="##_toolbarmsg" class="%%-toolbarmsg" style="display:none;">' +
+                // '<div id = "##_upload_dialog" class="%%-toolbarmsg-upload" onclick="$$.showWordImageDialog();">' + this.editor.getLang("clickToUpload") + '</div>' +
+                // '<div class="%%-toolbarmsg-close" onclick="$$.hideToolbarMsg();">x</div>' +
+                // '<div id="##_toolbarmsg_label" class="%%-toolbarmsg-label"></div>' +
+                // '<div style="height:0;overflow:hidden;clear:both;"></div>' +
+                // '</div>' +
                 '<div id="##_message_holder" class="%%-messageholder"></div>' +
                 '</div>' +
                 '<div id="##_iframeholder" class="%%-iframeholder">' +
@@ -378,16 +401,6 @@
             this._dialogs['wordimageDialog'].open();
         },
         // 渲染到指定ID位置
-        renderToolbarBoxHtml:function () {
-            let html = this.toolbars.map(is=>is.renderHtml()).join('')
-     
-            document.querySelector('#toolbar').classList.add('edui-toolbarboxouter','edui-default')
-            document.querySelector('#toolbar').innerHTML = `<div id="edu1_toolbarboxouter" class="edui-toolbarboxouter edui-default"><div class="edui-toolbarboxinner edui-default">${html}</div></div>`;
-            // document.querySelector('#toolbar').id="edu1_toolbarboxouter" 
-            // console.info(buff.join(''))
-            return '';
-            return buff.join('');
-        },
         _scale:function () {
             var doc = document,
                 editor = this.editor,
@@ -507,6 +520,7 @@
         }
     };
     utils.inherits(EditorUI, baidu.editor.ui.UIBase);
+
     var instances = {};
     UE.ui.Editor = function (options) {
         var editor = new UE.Editor(options);
@@ -657,6 +671,10 @@
             delete instances[id]
         }
     };
+    // 异步插件初始化 
+    UE.install = function(name,fn){
+
+    },
     // 转义message 后清楚
     UE.registerUI = function(uiName,fn,index,editorId){
         console.log('registerUI',uiName,'fn',index,editorId)
@@ -667,7 +685,5 @@
                 index:index
             };
         })
-
     }
-
 })();

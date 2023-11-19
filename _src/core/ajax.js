@@ -4,9 +4,10 @@
  * @since 1.2.6.1
  */
 UE.fetch = (route,method,params={},AUTH=false)=>{
-    let {UKEY,SIGN,APIURL,VIPURL} = utils.getConfig();
+    let useConfig = UE.Storage.useConfig;useStorage = UE.Storage.useStorage;
+    let {UKEY,SIGN,APIURL,VIPURL} = useConfig();
     let headers = {'Content-Type':'application/json'};
-    AUTH ? (headers[SIGN] = localStorage.getItem(SIGN)) : (headers.ukey = UKEY);
+    AUTH ? (headers[SIGN] = useStorage()[SIGN]) : (headers.ukey = UKEY);
     return fetch(...[`${AUTH?VIPURL:APIURL}/${route}`,{method:'POST',headers:headers,body:JSON.stringify({method:method,params:params})}]);
 }
 /**

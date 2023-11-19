@@ -12,26 +12,14 @@
         dialog.addListener('hide', function () {
             if (dialog.editor) {
                 var editor = dialog.editor;
-                try {
-                    if (browser.gecko) {
-                        var y = editor.window.scrollY,
-                            x = editor.window.scrollX;
-                        editor.body.focus();
-                        editor.window.scrollTo(x, y);
-                    } else {
-                        editor.focus();
-                    }
-
-
-                } catch (ex) {
-                }
+                editor?.focus();
             }
         });
         return dialog;
     };
 
     var iframeUrlMap = {
-        'anchor':'~/dialogs/anchor/anchor.html',
+        // 'login':'~/dialogs/login/login.html',
         'insertimage':'~/dialogs/image/image.html',
         'link':'~/dialogs/link/link.html',
         'spechars':'~/dialogs/spechars/spechars.html',
@@ -60,7 +48,7 @@
         'blockquote', 'pasteplain', 'pagebreak',
         'selectall', 'horizontal', 'removeformat', 'time', 'date', 'unlink',
         'insertparagraphbeforetable', 'insertrow', 'insertcol', 'mergeright', 'mergedown', 'deleterow',
-        'deletecol', 'splittorows', 'splittocols', 'splittocells', 'mergecells', 'deletetable', 'drafts'];
+        'deletecol', 'splittorows', 'splittocols', 'splittocells', 'mergecells', 'deletetable'];
 
     for (var i = 0, ci; ci = btnCmds[i++];) {
         ci = ci.toLowerCase();
@@ -178,7 +166,7 @@
     // 改变dialog渲染方式
     var dialogBtns = {
         noOk:['searchreplace', 'spechars', 'webapp','preview'],
-        ok:['attachment', 'anchor', 'link', 'insertimage', 'map', 'gmap', 'insertframe', 'wordimage',
+        ok:['attachment', 'link', 'insertimage', 'map', 'gmap', 'insertframe', 'wordimage',
             'insertvideo', 'insertframe', 'edittip', 'edittable', 'edittd', 'scrawl', 'template', 'music', 'background']
     };
 
@@ -716,7 +704,7 @@
     }
 
     // 表情
-    editorui["emotion"] = function (editor, iframeUrl) {
+    editorui.emotion = function (editor, iframeUrl) {
         
         var cmd = "emotion";
         var ui = new editorui.MultiMenuPop({

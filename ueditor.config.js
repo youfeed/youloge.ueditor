@@ -31,7 +31,7 @@
         // 服务器统一请求接口路径
         ,serverUrl: URL + "php/controller.php"
         // 定义需要下载的插件(/plugins/插件名/plugin.js)
-        ,plugins:['link','simpleupload','insertfile']
+        ,plugins:['article','link','simpleupload','insertfile']
         // 工具栏由`plugins 派生出来`
         ,toolbar:[]
         ,toolbars: [
@@ -41,20 +41,17 @@
             'customstyle', 'paragraph', 'fontfamily',  '|',
             'directionalityltr', 'directionalityrtl', 'indent', '|',// 'link', 'simpleupload',
             'justifyleft', 'justifycenter', 'justifyright', 'justifyjustify', '|', 'touppercase', 'tolowercase', '|',
-            'unlink', 'anchor', '|', 'imagenone', 'imageleft', 'imageright', 'imagecenter', '|',
+            'unlink', '|', 'imagenone', 'imageleft', 'imageright', 'imagecenter', '|',
             'insertimage', 'emotion', 'scrawl', 'insertvideo', 'music', 'attachment', 'map', 'gmap', 'insertframe', 'insertcode', 'webapp', 'pagebreak', 'template', 'background', '|',
             'horizontal', 'date', 'time', 'spechars', 'wordimage', '|',
             'inserttable',  '|',
-            'preview', 'searchreplace', 'drafts', '|', 'source',
+            'preview', 'searchreplace', '|', 'source',
         ]
         // 参考 `tinymce`进行配置 插件触发方式不一定非要从toolbar点击 允许分别加载 `toolbar` 按需展示
         
         // 
         //当鼠标放在工具栏上时显示的tooltip提示,留空支持自动多语言配置，否则以配置值为准
-        //,labelMap:{
-        //    'anchor':'', 'undo':''
-        //}
-
+        
         //语言配置项,默认是zh-cn。有需要的话也可以使用如下这样的方式来自动多语言切换，当然，前提条件是lang文件夹下存在对应的语言文件：
         //lang值也可以通过自动获取 (navigator.language||navigator.browserLanguage ||navigator.userLanguage).toLowerCase()
         //,lang:"zh-cn"

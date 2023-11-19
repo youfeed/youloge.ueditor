@@ -234,10 +234,10 @@
         me.inputRules = [];
         me.outputRules = [];
         //设置默认的常用属性 setConfig
-        UE.utils.setConfig(Editor.defaultOptions(me))
+        UE.Storage.initConfig(Editor.defaultOptions(me))
+        // UE.utils.setConfig(Editor.defaultOptions(me)) 
         me.setOpt(Editor.defaultOptions(me));
-        /* 尝试异步加载后台配置 */
-        me.loadServerConfig();
+
 
         if(!utils.isEmptyObject(UE.I18N)){
             //修改默认的语言类型

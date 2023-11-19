@@ -271,9 +271,6 @@
     content: "\e675";
 }
 
-.edui-default .edui-for-anchor .edui-icon:before {
-    content: "\e61b";
-}
 
 .edui-default .edui-for-pagebreak .edui-icon:before {
     content: "\e61d";

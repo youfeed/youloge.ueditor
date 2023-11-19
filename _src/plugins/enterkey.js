@@ -8,9 +8,7 @@
  * @author zhanyi
  */
 UE.plugins['enterkey'] = function() {
-    var hTag,
-        me = this,
-        tag = me.options.enterTag;
+    var hTag, me = this, tag = me.options.enterTag;
     me.addListener('keyup', function(type, evt) {
 
         var keyCode = evt.keyCode || evt.which;

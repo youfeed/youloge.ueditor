@@ -9,8 +9,20 @@
 
 ``` js
 UE.plugin.register('myplugin', function (){})
-UE.plugin.register.myplugin = function (){}
-UE.plugin.register.myplugin = ()=>{}
+UE.plugin.register.myplugin = function (){ }
+UE.plugin.register.myplugin = {
+  Dialog:{
+    name:'',
+    cssRules:'',
+    className:'',
+    autoReset: true,
+    draggable: true,
+    holdScroll: false,
+    onok: function (){},
+    oncancel: function (){},
+    onclose: function (t, ok){},
+  }
+}
 
 ```
 2. 返回插件方法
@@ -40,4 +52,6 @@ const ue = UE.getEditor('editor',{
 - `plugin.js` 写一个`openDialog`方法
 - 方式一：`@commands` 写一个监听指令`openmyplugin`其他位置通过运行`UE.getEditor('editor').execCommand("openmyplugin");`
 - 方式二：`@bindEvents`监听事件 `ready` 编辑器初始化完成时内部调用 `openDialog`
-- 
+- 如果有html弹窗Dialog 异步初始化
+
+### 

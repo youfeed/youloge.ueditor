@@ -105,7 +105,8 @@ UE.plugin.register('autolink',function(){
                 }
             }
         }:{}
-    },function(){
+    },
+    function(){
         var keyCodes = {
             37:1, 38:1, 39:1, 40:1,
             13:1,32:1

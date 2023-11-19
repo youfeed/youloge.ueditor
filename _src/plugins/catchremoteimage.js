@@ -6,8 +6,7 @@
  * 远程图片抓取,当开启本插件时所有不符合本地域名的图片都将被抓取成为本地服务器上的图片
  */
 UE.plugins['catchremoteimage'] = function () {
-    var me = this,
-        ajax = UE.ajax;
+    var me = this,ajax = UE.ajax;
 
     /* 设置默认值 */
     if (me.options.catchRemoteImageEnable === false) return;

@@ -20,6 +20,8 @@
                     options.cssRules = '.edui-default .edui-for-'+ name +' .edui-dialog-content  {'+ cssRules +'}'
                 }
             }
+            // 给this绑定 initOptions 方法
+            // console.log('baidu.editor.ui.Dialog1',options);
             this.initOptions(utils.extend({
                 autoReset: true,
                 draggable: true,
@@ -31,6 +33,7 @@
                 //是否控制dialog中的scroll事件， 默认为不阻止
                 holdScroll: false
             },options));
+            // console.log('baidu.editor.ui.Dialog2',this);
             this.initDialog();
         };
     var modalMask;
@@ -40,8 +43,7 @@
         draggable: false,
         uiName: 'dialog',
         initDialog: function (){
-            var me = this,
-                theme=this.editor.options.theme;
+            var me = this,theme=this.editor.options.theme;
             if(this.cssRules){
                 utils.cssRule('edui-customize-'+this.name+'-style',this.cssRules);
             }

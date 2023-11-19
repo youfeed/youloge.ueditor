@@ -7,7 +7,7 @@
  */
 UE.I18N['zh-cn'] = {
     'labelMap':{
-        'anchor':'锚点', 'undo':'撤销', 'redo':'重做', 'bold':'加粗', 'indent':'首行缩进', 
+        'undo':'撤销', 'redo':'重做', 'bold':'加粗', 'indent':'首行缩进', 
         'italic':'斜体', 'underline':'下划线', 'strikethrough':'删除线', 'subscript':'下标','fontborder':'字符边框',
         'superscript':'上标', 'formatmatch':'格式刷', 'source':'源代码', 'blockquote':'引用',
         'pasteplain':'纯文本粘贴模式', 'selectall':'全选', 'preview':'预览',
@@ -25,7 +25,7 @@ UE.I18N['zh-cn'] = {
         'imageleft':'左浮动', 'imageright':'右浮动', 'attachment':'附件', 'imagecenter':'居中', 'wordimage':'图片转存',
         'lineheight':'行间距','edittip' :'编辑提示','customstyle':'自定义标题', 'autotypeset':'自动排版',
         'webapp':'百度应用','touppercase':'字母大写', 'tolowercase':'字母小写','background':'背景','template':'模板','scrawl':'涂鸦',
-        'music':'音乐','inserttable':'插入表格','drafts': '从草稿箱加载'
+        'music':'音乐','inserttable':'插入表格'
     },
     'insertorderedlist':{
         'num':'1,2,3...',
@@ -92,9 +92,7 @@ UE.I18N['zh-cn'] = {
     'closeDialog':"关闭对话框",
     'tableDrag':"表格拖动必须引入uiUtils.js文件！",
     'autofloatMsg':"工具栏浮动依赖编辑器UI，您首先需要引入UI文件!",
-    'loadconfigError': '获取后台配置项请求出错，上传功能将不能正常使用！',
-    'loadconfigFormatError': '后台配置项返回格式出错，上传功能将不能正常使用！',
-    'loadconfigHttpError': '请求后台配置项http错误，上传功能将不能正常使用！',
+
     'insertcode':{
         'as3':'ActionScript 3',
         'bash':'Bash/Shell',
@@ -202,7 +200,6 @@ UE.I18N['zh-cn'] = {
     'justifycenter':'居中',
     'justify':'默认',
     'clear':'清除',
-    'anchorMsg':'锚点',
     'delete':'删除',
     'clickToUpload':"点击上传",
     'unset':'尚未设置语言文件',
@@ -467,11 +464,6 @@ UE.I18N['zh-cn'] = {
         'singer':'歌手',
         'special':'专辑',
         'listenTest':'试听'
-    },
-    'anchor':{
-        'static':{
-            'lang_input_anchorName':'锚点名字：'
-        }
     },
     'emotion':{
         'static':{

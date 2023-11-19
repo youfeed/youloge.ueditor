@@ -11,6 +11,7 @@ UE.plugin.register('simpleupload', function (){
         hideFile.id = 'file';
         hideFile.type = 'file';
         hideFile.accept = 'image/*';
+        hideFile.style.display = 'none';
         // hideFile.style.cssText = 'width:0;height:0;border:0;margin:0;padding:0;position:absolute;top:0;left:0;filter:alpha(opacity=0);-moz-opacity:0;-khtml-opacity: 0;opacity: 0;cursor:pointer;';
         
         const onchange = (e)=>{

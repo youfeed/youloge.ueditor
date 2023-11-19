@@ -177,3 +177,64 @@
     cursor: pointer;
     color: red;
 }
+
+
+#metadata {
+    display: flex;
+    align-items: center;
+    width: 578px;
+    margin: 10px auto;
+}
+#metadata .left{
+    aspect-ratio: 1 / 1;
+    margin-right: 10px;
+}
+#metadata .left img{
+    width: 80px;
+    height: 80px;
+}
+#metadata .right{
+    flex: auto;
+}
+#metadata .right .title input{
+    font-size: 24px;
+    color: #333;
+    width: 100%;
+    padding: 5px;
+    outline: 0;
+    border: 0;
+}
+#metadata .right .intro input{
+    font-size: 16px;
+    color: #888;
+    width: 100%;
+    padding: 5px;
+    outline: 0;
+    border: 0;
+}
+#metadata .label{
+    display: flex;
+    align-items: center;
+}
+#metadata .labels{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-right: 5px;
+}
+#metadata .labels span{
+    background: #f1f1f1;
+    padding: 1px 7px;
+    border-radius: 5px;
+    color: #8d8d8d;
+    cursor: pointer;
+}
+#metadata .label input{
+    flex: auto;
+    border: 0;
+    outline: 0;
+}
+#metadata .labels div::before,#metadata .label input::before{
+    content: '#';
+    color: #888;
+}

@@ -39,8 +39,7 @@ UE.plugins['autotypeset'] = function(){
         opt = me.options.autotypeset,
         remainClass = {
             'selectTdClass':1,
-            'pagebreak':1,
-            'anchorclass':1
+            'pagebreak':1
         },
         remainTag = {
             'li':1
