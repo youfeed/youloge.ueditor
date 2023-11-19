@@ -4,7 +4,8 @@
  * @since 1.2.6.1
  */
 UE.plugin.register('login', function (){
-    const utils = UE.utils;var me = this;
+    var me = this;
+    const utils = UE.utils;
     const useStorage = UE.Storage.useStorage;
     const setStorage = UE.Storage.setStorage;
     // 初始化检测
@@ -13,6 +14,9 @@ UE.plugin.register('login', function (){
         let {profile} = useStorage();let time = new Date().getTime() / 1000 >> 0;
         if(profile?.signature == undefined || profile?.expire < time){
             onLogin()
+        }else{
+            // 广播一下 登录成功
+            me.fireEvent('article.init')
         }
         console.log('profile',profile)
     }
@@ -40,6 +44,7 @@ UE.plugin.register('login', function (){
                         setStorage('signature',signature);
                         mask.remove();
                         // 广播一下 登录成功
+                        me.fireEvent('article.init')
                     }
                 }
                 action[method] ? action[method]() : ''

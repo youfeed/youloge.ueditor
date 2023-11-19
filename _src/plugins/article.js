@@ -44,6 +44,8 @@ UE.plugin.register('article',function(){
   return {
     bindEvents:{
       'ready':function(){
+      },
+      'article.init':function(){
         initialization()
       }
     },
